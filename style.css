@@ -1,0 +1,798 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap');
+
+/* Color Variables */
+:root {
+  --parchment-dark: #2c1a04;
+  --gold-primary: #b3862b;
+  --gold-dark: #7a5813;
+  --gold-light: #ffd700;
+  --crimson-dark: #6e0000;
+  --text-dark: #3a2712;
+  --text-light: #5c4021;
+  --border-color: rgba(122, 88, 19, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a0f02;
+  background-image: radial-gradient(circle, #2d1b09 0%, #0d0701 100%);
+  color: var(--text-dark);
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.6;
+}
+
+/* Control Panel (Hidden in print) */
+.control-panel {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background: rgba(13, 7, 1, 0.85);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--gold-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+  border: 2px solid var(--gold-light);
+  color: #fff;
+  padding: 12px 28px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(179, 134, 43, 0.4);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+}
+
+.btn-primary .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Main Container */
+.book-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Parchment Page Base styling */
+.page {
+  background-color: #f7ebd3;
+  background-image: url('parchment_bg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  min-height: 1050px; /* Golden Ratio aspect */
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 100px rgba(139, 90, 43, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Decorative Border system */
+.decorative-border-outer {
+  border: 12px double var(--gold-dark);
+  margin: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.decorative-border-inner {
+  border: 2px solid var(--border-color);
+  margin: 4px;
+  padding: 30px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Corner Flourishes */
+.corner-flourish {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--gold-primary);
+  pointer-events: none;
+}
+.corner-flourish.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.corner-flourish.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.corner-flourish.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.corner-flourish.br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+.corner-flourish::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--gold-primary);
+  border-radius: 50%;
+}
+.corner-flourish.tl::before { top: 6px; left: 6px; }
+.corner-flourish.tr::before { top: 6px; right: 6px; }
+.corner-flourish.bl::before { bottom: 6px; left: 6px; }
+.corner-flourish.br::before { bottom: 6px; right: 6px; }
+
+/* Page Content */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Headers */
+.quest-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.main-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 2.2rem;
+  color: var(--crimson-dark);
+  margin: 0 0 10px 0;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.quest-tag {
+  font-family: 'MedievalSharp', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  color: var(--gold-dark);
+  display: inline-block;
+  border-bottom: 2px solid var(--gold-primary);
+  padding-bottom: 3px;
+  margin-bottom: 5px;
+}
+
+.quest-tag.critical {
+  color: var(--crimson-dark);
+  border-color: var(--crimson-dark);
+  font-weight: bold;
+}
+
+.quest-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 1.8rem;
+  color: var(--parchment-dark);
+  margin: 5px 0;
+}
+
+.date-badge {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.2rem;
+  color: var(--crimson-dark);
+  margin-top: 5px;
+}
+
+/* Dividers */
+.divider-swirl {
+  height: 25px;
+  background-image: radial-gradient(circle, var(--gold-primary) 15%, transparent 20%),
+                    linear-gradient(to right, transparent, var(--gold-primary), transparent);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 15px 15px, 80% 2px;
+  margin: 15px 0 25px 0;
+}
+
+.divider-swirl-small {
+  height: 15px;
+  background-image: linear-gradient(to right, transparent, var(--gold-primary), transparent);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50% 2px;
+  margin: 15px 0;
+}
+
+/* Typography styles */
+.greeting {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Crossed out styles */
+.text-crossed {
+  text-decoration: line-through;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+.class-callout {
+  border-left: 3px solid var(--gold-primary);
+  padding-left: 15px;
+  margin: 20px 0;
+  font-family: 'MedievalSharp', cursive;
+}
+
+.class-callout p {
+  margin: 5px 0;
+}
+
+.need-presence {
+  font-size: 1.15rem;
+  color: var(--crimson-dark);
+  font-weight: bold;
+}
+
+.quest-summary {
+  background: rgba(179, 134, 43, 0.08);
+  border: 1px dashed var(--gold-primary);
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 25px;
+}
+
+.dbz-outro {
+  font-size: 0.9rem;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* Quests Content Area */
+.quest-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  position: relative;
+  padding-bottom: 72px;
+}
+
+.quest-main-text {
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.intro-adventure {
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Details Grid */
+.quest-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media(min-width: 600px) {
+  .quest-details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .gear-section {
+    grid-column: span 2;
+  }
+}
+
+.details-section {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.details-section h3 {
+  font-family: 'MedievalSharp', cursive;
+  margin-top: 0;
+  color: var(--parchment-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.rpg-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--gold-dark);
+}
+
+.side-quests-list, .travel-directions {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.side-quests-list li, .travel-directions li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.gear-tag {
+  font-family: 'MedievalSharp', cursive;
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--crimson-dark);
+  letter-spacing: 0.5px;
+}
+
+/* Quest 2 & 3 Combined styling */
+.quest-section-split {
+  flex: 1;
+}
+
+.quest-body-compact {
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+
+.quest-body-compact p {
+  margin: 5px 0;
+}
+
+.critical-text {
+  font-weight: bold;
+  border-left: 3px solid var(--crimson-dark);
+  padding-left: 10px;
+  color: var(--crimson-dark);
+}
+
+.travel-compact, .gear-compact {
+  font-size: 0.88rem;
+  margin-top: 5px;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(122, 88, 19, 0.15);
+}
+
+.side-quests-list.horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  list-style-type: none;
+  margin: 10px 0;
+  gap: 5px;
+}
+
+.side-quests-list.horizontal li {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.side-quests-list.horizontal li::before {
+  content: '🛡️ ';
+  font-size: 0.75rem;
+}
+
+/* Flex Header for side-by-side Title & QR Code */
+.flex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  gap: 15px;
+}
+
+.qr-container-inline {
+  flex-shrink: 0;
+}
+
+.save-date-wrapper {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+}
+
+.save-date-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 132px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 2px solid var(--gold-primary);
+  background: linear-gradient(135deg, rgba(255, 242, 210, 0.96) 0%, rgba(214, 169, 78, 0.96) 100%);
+  color: var(--parchment-dark);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.save-date-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.save-date-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(122, 88, 19, 0.28);
+  filter: brightness(1.03);
+}
+
+.qr-container-wrapper {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  transform: none;
+  z-index: 2;
+  width: 86px;
+  height: 86px;
+  flex: none;
+}
+
+.qr-container-wrapper a {
+  display: flex;
+  width: 86px;
+  height: 86px;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-container-wrapper .qr-border {
+  border: 2px solid var(--gold-primary);
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 86px !important;
+  height: 86px !important;
+  min-width: 86px !important;
+  min-height: 86px !important;
+  max-width: 86px !important;
+  max-height: 86px !important;
+  flex: none;
+  padding: 6px;
+}
+
+.qr-container-wrapper .qr-image {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  object-fit: contain;
+  flex: none;
+  display: block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.qr-image:hover {
+  transform: scale(1.1);
+}
+
+/* Custom layout classes for 1-to-1 copy text */
+.quest-details-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.section-intro {
+  font-size: 0.98rem;
+  margin-bottom: 12px;
+}
+
+.gear-text {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  color: var(--crimson-dark);
+  margin: 0;
+}
+
+.critical-announcement {
+  font-weight: bold;
+  border-left: 4px solid var(--crimson-dark);
+  padding-left: 15px;
+  color: var(--crimson-dark);
+  font-size: 1.05rem;
+}
+
+.concluding-question {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.2rem;
+  color: var(--crimson-dark);
+  text-align: center;
+  font-style: italic;
+  margin: 25px 0;
+}
+
+.quest-summary-highlight {
+  background: rgba(179, 134, 43, 0.08);
+  border: 1px dashed var(--gold-primary);
+  padding: 18px;
+  border-radius: 4px;
+  margin: 25px 0;
+  font-weight: 600;
+}
+
+/* Quest 4 styling additions */
+.question-callout {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.15rem;
+  color: var(--crimson-dark);
+  text-align: center;
+  font-style: italic;
+  margin-top: 15px;
+}
+
+.travel-intro {
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0;
+}
+
+@media (max-width: 600px) {
+  .quest-body {
+    padding-bottom: 62px;
+  }
+
+  .save-date-wrapper {
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .save-date-button {
+    min-width: 120px;
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+  }
+
+  .qr-container-wrapper {
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+  }
+
+  .qr-container-wrapper,
+  .qr-container-wrapper a,
+  .qr-container-wrapper .qr-border {
+    width: 86px;
+    height: 86px;
+    min-width: 86px;
+    min-height: 86px;
+    max-width: 86px;
+    max-height: 86px;
+  }
+
+  .qr-container-wrapper .qr-image {
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+  }
+}
+
+/* PRINT STYLING - MUST MATCH A4 PRECISELY */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .save-date-wrapper {
+    display: none !important;
+  }
+
+  /* Hide UI elements */
+  .control-panel {
+    display: none !important;
+  }
+  
+  /* Reset Page/Body background settings for print */
+  body {
+    background: none !important;
+    color: #000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .book-container {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    gap: 0 !important;
+  }
+
+  .page {
+    break-before: page !important;
+    page-break-before: always !important;
+    break-after: page !important;
+    page-break-after: always !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: 297mm !important;
+    min-height: 297mm; /* Standard A4 Height */
+    max-height: 297mm;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    /* Force background print */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background-color: #f7ebd3 !important;
+    background-image: url('parchment_bg.png') !important;
+  }
+
+  .page:first-child {
+    break-before: auto !important;
+    page-break-before: auto !important;
+  }
+
+  .page:last-child {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  /* Adjust padding for clean margins in PDF */
+  .decorative-border-outer {
+    margin: 2mm !important;
+    border-width: 4px !important;
+  }
+
+  .decorative-border-inner {
+    margin: 1px !important;
+    padding: 4mm 5mm !important;
+  }
+
+  /* Compress content for guaranteed one-page fit per section */
+  .page-content {
+    transform: scale(0.93);
+    transform-origin: top center;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* First page carries more copy, so compress it a little extra */
+  #intro-page .page-content {
+    transform: scale(1) !important;
+    width: 100% !important;
+  }
+
+  #intro-page p,
+  #intro-page li {
+    font-size: 1.06em !important;
+    line-height: 1.45 !important;
+    margin-bottom: 9px !important;
+  }
+
+  .page p,
+  .page li {
+    font-size: 0.93em !important;
+    line-height: 1.33 !important;
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .main-title {
+    font-size: 1.9rem !important;
+    margin-bottom: 6px !important;
+  }
+
+  .quest-title {
+    font-size: 1.45rem !important;
+    margin: 2px 0 !important;
+  }
+
+  .quest-tag {
+    font-size: 0.78rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .quest-body,
+  .quest-details-stack {
+    gap: 10px !important;
+  }
+
+  .details-section {
+    padding: 10px !important;
+  }
+
+  .details-section h3 {
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 4px !important;
+  }
+
+  .divider-swirl {
+    margin: 8px 0 12px 0 !important;
+    height: 18px !important;
+  }
+
+  .side-quests-list,
+  .travel-directions {
+    margin: 0 !important;
+    padding-left: 16px !important;
+  }
+
+  #intro-page .quest-header {
+    margin-bottom: 4px !important;
+  }
+
+  #intro-page .main-title {
+    font-size: 2.08rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  #intro-page .subtitle {
+    font-size: 1.12rem !important;
+    line-height: 1.4 !important;
+  }
+
+  #intro-page .divider-swirl {
+    margin: 8px 0 12px 0 !important;
+    height: 18px !important;
+  }
+
+  #intro-page .class-callout {
+    margin: 14px 0 !important;
+    padding-left: 10px !important;
+  }
+
+  #intro-page .quest-summary-highlight {
+    margin: 14px 0 !important;
+    padding: 12px !important;
+  }
+
+  #intro-page .dbz-outro {
+    margin-top: 10px !important;
+  }
+
+  /* Make sure links are readable without URLs showing */
+  a:after {
+    content: "" !important;
+  }
+}

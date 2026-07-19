@@ -1,0 +1,17 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//RPG Invitation//Quest Log//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:quest-1-20261204@rpginvitation.local
+DTSTAMP:20260719T000000Z
+DTSTART;TZID=Asia/Kolkata:20261204T090000
+DTEND;TZID=Asia/Kolkata:20261204T130000
+SUMMARY:Quest 1 - Forging Magical Armor
+LOCATION:Sheshanaga, Ullur-74
+DESCRIPTION:Naandi Ceremony from 9 AM to 11 AM, followed by the final feast before the trail begins. Gathering at Sheshanaga, Ullur-74. Map: https://maps.app.goo.gl/eRz2ff5rPE43oUbi8
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR
