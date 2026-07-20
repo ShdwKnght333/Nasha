@@ -84,17 +84,49 @@ body {
   background-image: url('parchment_bg.png');
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
+  border-radius: 45px 45px 45px 45px / 18px 18px 18px 18px;
   position: relative;
   width: 100%;
   max-width: 800px;
   min-height: 1050px; /* Golden Ratio aspect */
+  --scroll-rod-size: 22px;
   box-shadow: 
     0 15px 35px rgba(0, 0, 0, 0.6),
-    inset 0 0 100px rgba(139, 90, 43, 0.15);
+    inset 0 0 100px rgba(139, 90, 43, 0.15),
+    inset 0 14px 18px -12px rgba(58, 39, 18, 0.55),
+    inset 0 -14px 18px -12px rgba(58, 39, 18, 0.55);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+/* Scroll rod caps - simulate the parchment being rolled around a rod at the top & bottom */
+.page::before,
+.page::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--scroll-rod-size);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.55) 0%, transparent 35%),
+    linear-gradient(180deg, #f4d78a 0%, #b3862b 30%, #7a5813 55%, #b3862b 80%, #4a3308 100%);
+  z-index: 0;
+  pointer-events: none;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page::before {
+  top: 0;
+  border-radius: 45px 45px 0 0 / 18px 18px 0 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.page::after {
+  bottom: 0;
+  border-radius: 0 0 45px 45px / 0 0 18px 18px;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* Decorative Border system */
@@ -105,6 +137,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 1;
 }
 
 .decorative-border-inner {
@@ -619,7 +652,13 @@ body {
   }
 
   .save-date-wrapper {
-    display: none !important;
+    display: block !important;
+  }
+
+  .save-date-button {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
   }
 
   /* Hide UI elements */
@@ -664,6 +703,12 @@ body {
     print-color-adjust: exact !important;
     background-color: #f7ebd3 !important;
     background-image: url('parchment_bg.png') !important;
+  }
+
+  .page::before,
+  .page::after {
+    --scroll-rod-size: 8px;
+    border-radius: 0 !important;
   }
 
   .page:first-child {
