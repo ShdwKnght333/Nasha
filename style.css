@@ -189,6 +189,16 @@ body {
   margin-bottom: 10px;
 }
 
+.pixel-art-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 8px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
 .main-title {
   font-family: 'Cinzel Decorative', Georgia, serif;
   font-size: 2.2rem;
@@ -775,6 +785,12 @@ body {
   .quest-tag {
     font-size: 0.78rem !important;
     margin-bottom: 2px !important;
+  }
+
+  .pixel-art-icon {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 4px !important;
   }
 
   .quest-body,
