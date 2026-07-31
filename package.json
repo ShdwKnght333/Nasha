@@ -3,10 +3,20 @@
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
+    "pdf": "node generate-pdf.js",
+    "art": "python3 tools/make_pixel_art.py && python3 tools/make_scenery.py",
+    "serve": "python3 tools/serve.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "overrides": {
+    "ip-address": "9.0.5",
+    "yargs": "17.7.2"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.15.0"
+  }
 }

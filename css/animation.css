@@ -1,0 +1,309 @@
+/* ==========================================================================
+   ANIMATION — motion layer.
+
+   Everything here is screen-only and gated behind `.has-reveal`, which is
+   added to <html> by script.js. If JavaScript never runs, no element is ever
+   left hidden and the page degrades to the static Phase 1 layout.
+   ========================================================================== */
+
+/* Elements that exist purely as on-screen game chrome. Hidden in print.css. */
+.screen-only {
+  /* no styling; acts as a print-visibility hook */
+}
+
+@media screen {
+  /* --- timing tokens -------------------------------------------------- */
+  :root {
+    --reveal-base: 260ms;   /* delay before the first child appears */
+    --reveal-step: 70ms;    /* stagger between siblings */
+    --reveal-dur: 620ms;
+    --ease-out-back: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* --- the parchment unfurls from its top rod ------------------------- */
+  .has-reveal .page {
+    will-change: clip-path, opacity;
+  }
+
+  .has-reveal .page:not(.is-visible) {
+    clip-path: inset(0 0 calc(100% - var(--scroll-rod-size)) 0);
+    opacity: 0.35;
+  }
+
+  .has-reveal .page.is-visible {
+    animation: page-unfurl 950ms var(--ease-out-back) forwards;
+  }
+
+  @keyframes page-unfurl {
+    from {
+      clip-path: inset(0 0 calc(100% - var(--scroll-rod-size)) 0);
+      opacity: 0.35;
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+
+  /* --- staggered content reveal --------------------------------------- */
+  .has-reveal .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .has-reveal .page.is-visible .reveal {
+    animation: reveal-rise var(--reveal-dur) var(--ease-out-back) forwards;
+    animation-delay: calc(var(--reveal-base) + var(--i, 0) * var(--reveal-step));
+  }
+
+  @keyframes reveal-rise {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* --- corner flourishes draw themselves in --------------------------- */
+  .has-reveal .corner-flourish {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+
+  .has-reveal .page.is-visible .corner-flourish {
+    animation: flourish-draw 520ms var(--ease-out-back) forwards;
+    animation-delay: 620ms;
+  }
+
+  .has-reveal .page.is-visible .corner-flourish.tr { animation-delay: 700ms; }
+  .has-reveal .page.is-visible .corner-flourish.bl { animation-delay: 780ms; }
+  .has-reveal .page.is-visible .corner-flourish.br { animation-delay: 860ms; }
+
+  @keyframes flourish-draw {
+    from { width: 0; height: 0; opacity: 0; }
+    to   { width: 32px; height: 32px; opacity: 1; }
+  }
+
+  /* --- divider wipes outward from the centre -------------------------- */
+  .has-reveal .divider-swirl {
+    background-size: 0 0, 0% 2px;
+  }
+
+  .has-reveal .page.is-visible .divider-swirl {
+    animation: divider-wipe 780ms var(--ease-out-back) forwards;
+    animation-delay: 420ms;
+  }
+
+  @keyframes divider-wipe {
+    from { background-size: 0 0, 0% 2px; }
+    60%  { background-size: 0 0, 80% 2px; }
+    to   { background-size: 15px 15px, 80% 2px; }
+  }
+
+  /* --- the crossed-out lines strike themselves through ---------------- */
+  /* `--i` is inherited from the reveal parent, so each strike lands just
+     after its own block has risen into place. */
+  .has-reveal .text-crossed {
+    text-decoration: none;
+    position: relative;
+    /* Shrink the block to its text so the rule does not overshoot the words. */
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .has-reveal .dbz-outro {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .has-reveal .text-crossed::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.7;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left center;
+  }
+
+  .has-reveal .page.is-visible .text-crossed::after {
+    animation: strike-through 460ms ease-out forwards;
+    animation-delay: calc(
+      var(--reveal-base) + var(--i, 0) * var(--reveal-step) + 340ms +
+      var(--strike, 0) * 260ms
+    );
+  }
+
+  .has-reveal .class-callout .text-crossed:nth-child(1) { --strike: 0; }
+  .has-reveal .class-callout .text-crossed:nth-child(2) { --strike: 1; }
+  .has-reveal .class-callout .text-crossed:nth-child(3) { --strike: 2; }
+
+  @keyframes strike-through {
+    to { transform: translateY(-50%) scaleX(1); }
+  }
+
+  /* --- list items cascade in ------------------------------------------ */
+  .has-reveal .details-section li {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  .has-reveal .page.is-visible .details-section li {
+    animation: list-in 420ms ease-out forwards;
+    animation-delay: calc(
+      var(--reveal-base) + var(--i, 0) * var(--reveal-step) + 220ms +
+      var(--li, 0) * 80ms
+    );
+  }
+
+  .has-reveal .details-section li:nth-child(1) { --li: 0; }
+  .has-reveal .details-section li:nth-child(2) { --li: 1; }
+  .has-reveal .details-section li:nth-child(3) { --li: 2; }
+  .has-reveal .details-section li:nth-child(4) { --li: 3; }
+  .has-reveal .details-section li:nth-child(5) { --li: 4; }
+
+  @keyframes list-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* --- idle motion ----------------------------------------------------- */
+  .pixel-art-icon {
+    animation: icon-bob 3.4s ease-in-out infinite;
+  }
+
+  @keyframes icon-bob {
+    50% { transform: translateY(-5px); }
+  }
+
+  /* Quest 3 is the boss encounter: give the alert a slow red heartbeat. */
+  .page[data-quest="3"] .critical-announcement {
+    animation: boss-pulse 2.6s ease-in-out infinite;
+  }
+
+  @keyframes boss-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 rgba(140, 28, 19, 0);
+      background: transparent;
+    }
+    50% {
+      box-shadow: -4px 0 18px -6px rgba(140, 28, 19, 0.6);
+      background: rgba(140, 28, 19, 0.05);
+    }
+  }
+
+  /* --- hover interactions ---------------------------------------------- */
+  .details-section {
+    transition: transform 0.22s var(--ease-out-back),
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
+  }
+
+  .details-section:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 20px -10px rgba(58, 39, 18, 0.55);
+  }
+
+  .side-quests-list li,
+  .travel-directions li {
+    transition: transform 0.18s ease-out, color 0.18s ease;
+  }
+
+  .side-quests-list li:hover,
+  .travel-directions li:hover {
+    transform: translateX(5px);
+    color: var(--parchment-dark);
+  }
+
+  /* Gold sweep across the save-the-date button */
+  .save-date-button {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .save-date-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.65) 50%,
+      transparent 80%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+
+  .save-date-button:hover::after {
+    animation: sweep 720ms ease-out;
+  }
+
+  @keyframes sweep {
+    to { transform: translateX(120%); }
+  }
+
+  /* The QR code quietly signals that it is tappable */
+  .qr-container-wrapper .qr-border {
+    animation: qr-glow 3.4s ease-in-out infinite;
+  }
+
+  @keyframes qr-glow {
+    0%, 100% { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); }
+    50%      { box-shadow: 0 2px 14px rgba(179, 134, 43, 0.55); }
+  }
+
+  /* --- scroll progress rail in the control panel ----------------------- */
+  .quest-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -2px;
+    height: 3px;
+    background: rgba(122, 88, 19, 0.35);
+  }
+
+  .quest-progress__fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  }
+}
+
+/* Respect OS-level reduced motion. Applies to every animation added above. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .has-reveal .page:not(.is-visible) {
+    clip-path: none;
+    opacity: 1;
+  }
+
+  .has-reveal .corner-flourish {
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+  }
+
+  .has-reveal .text-crossed {
+    text-decoration: line-through;
+  }
+
+  .has-reveal .text-crossed::after {
+    display: none;
+  }
+}
