@@ -97,7 +97,7 @@ function initShare() {
 
   const shareData = {
     title: 'A New Beginning - Quest Log',
-    text: 'Join Namratha and Shreyas on their wedding quest.',
+    text: 'Join Namratha and Shreyas on their magical quest.',
     url: window.location.href,
   };
 
