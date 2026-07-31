@@ -71,24 +71,27 @@
 }
 
 /* --- adventurers standing on the near ridge --- */
+/* Centred with flex, not `translateX(-50%)`: the parallax loop writes to the
+   inline `transform`, which would wipe out any centring done that way. */
 .hero__cast {
   position: absolute;
-  left: 50%;
+  left: 0;
+  right: 0;
   bottom: 14vh;
-  transform: translateX(-50%);
   display: flex;
   align-items: flex-end;
-  gap: 14px;
+  justify-content: center;
+  gap: 18px;
   z-index: 4;
   pointer-events: none;
   will-change: transform;
 }
 
 .hero__cast img {
-  width: 48px;
-  height: 80px;
+  width: 60px;
+  height: 100px;
   image-rendering: pixelated;
-  filter: drop-shadow(0 0 12px rgba(232, 158, 74, 0.35));
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.55));
 }
 
 .hero__cast img:first-child { animation: hero-bob 3.6s ease-in-out infinite; }
@@ -370,7 +373,7 @@
   .countdown__value { font-size: 0.9rem; }
   .countdown__name { font-size: 0.58rem; }
   .btn-quest { padding: 12px 18px; font-size: 0.6rem; }
-  .hero__cast img { width: 36px; height: 60px; }
+  .hero__cast img { width: 44px; height: 74px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

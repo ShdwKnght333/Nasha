@@ -4,7 +4,7 @@
   "main": "script.js",
   "scripts": {
     "pdf": "node generate-pdf.js",
-    "art": "python3 tools/make_pixel_art.py && python3 tools/make_scenery.py",
+    "art": "python3 tools/make_pixel_art.py && python3 tools/make_scenery.py && python3 tools/make_scenes.py",
     "serve": "python3 tools/serve.py",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

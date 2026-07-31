@@ -54,6 +54,19 @@ SILHOUETTE = {
     "D": GOLD_DARK,
 }
 
+# The couple stand against a lit dusk sky, so they are drawn in full colour
+# rather than as silhouettes.
+COUPLE = {
+    ".": None,
+    "H": (46, 30, 24, 255),     # hair
+    "S": (222, 166, 116, 255),  # skin
+    "R": (186, 38, 50, 255),    # saree red
+    "M": (132, 22, 38, 255),    # saree fold shadow
+    "G": (240, 196, 74, 255),   # gold trim / jewellery
+    "C": (244, 232, 206, 255),  # kurta cream
+    "B": (198, 178, 140, 255),  # kurta shadow
+}
+
 
 # ------------------------------------------------------------- decorations --
 def draw_gopuram(img, cx, base_y, color, lit):
@@ -142,55 +155,67 @@ def make_fore_layer():
 
 # ---------------------------------------------------------------- sprites --
 ADVENTURER_A = [
-    ".....KKK....",
-    "....KKKKK...",
-    "....KGGGK...",
-    "....KKKKK...",
-    ".....KKK....",
-    "....KKKKK...",
-    "...GKKKKKG..",
-    "..KGKKKKKGK.",
-    "..K.KKKKK.K.",
-    "....KKKKK...",
-    "....KKKKK...",
-    "...KKKKKKK..",
-    "...KKKKKKK..",
-    "..KKKKKKKKK.",
-    "..KKKKKKKKK.",
-    ".KKKKKKKKKKK",
-    ".KKKKKKKKKKK",
-    ".GKKKKKKKKKG",
-    "..KK.....KK.",
-    "..KK.....KK.",
+    "....HHHH....",
+    "...HHHHHH...",
+    "..HHSSSSHH..",
+    "..HHSSSSHH..",
+    "...HSSSSH...",
+    "....GSSG....",
+    "...GRRRRG...",
+    "..SRRRRRRS..",
+    "..SRRRRRRS..",
+    "...RRRRRR...",
+    "...GGGGGG...",
+    "..RRRRRRRR..",
+    "..RRRRRRRR..",
+    ".RRRRRRRRRR.",
+    ".RRRRRRRRRR.",
+    ".RRMMRRMMRR.",
+    ".RRRRRRRRRR.",
+    "GGGGGGGGGGGG",
+    "..SS....SS..",
+    "..HH....HH..",
 ]
 
 ADVENTURER_B = [
-    "....KKKK....",
-    "...KKKKKK...",
-    "...KGGGGK...",
-    "...KKKKKK...",
-    "....KKKK....",
-    "...KKKKKK...",
-    "..GKKKKKKG..",
-    ".KGKKKKKKGK.",
-    ".K.KKKKKK.K.",
-    "...KKKKKK...",
-    "...KKKKKK...",
-    "...KKKKKK...",
-    "...KKKKKK...",
-    "...KKKKKK...",
-    "...KK..KK...",
-    "...KK..KK...",
-    "...KK..KK...",
-    "...KK..KK...",
-    "..KKK..KKK..",
-    "..GKK..KKG..",
+    "....HHHH....",
+    "...HHHHHH...",
+    "...HSSSSH...",
+    "...HSSSSH...",
+    "....SSSS....",
+    ".....SS.....",
+    "..GCCCCCCG..",
+    ".SGCCCCCCGS.",
+    ".SGCCCCCCGS.",
+    "..GCCCCCCG..",
+    "...CCCCCC...",
+    "...CGGGGC...",
+    "...CCCCCC...",
+    "...CBBBBC...",
+    "...CC..CC...",
+    "...CC..CC...",
+    "...CC..CC...",
+    "...BB..BB...",
+    "..HHH..HHH..",
+    "..HHH..HHH..",
 ]
 
 
 def make_adventurers():
-    save(from_ascii(ADVENTURER_A, SILHOUETTE), "adventurer-a.png", 4, PIXEL_ART_DIR)
-    save(from_ascii(ADVENTURER_B, SILHOUETTE), "adventurer-b.png", 4, PIXEL_ART_DIR)
+    save(from_ascii(ADVENTURER_A, COUPLE), "adventurer-a.png", 4, PIXEL_ART_DIR)
+    save(from_ascii(ADVENTURER_B, COUPLE), "adventurer-b.png", 4, PIXEL_ART_DIR)
+    # A gold-lit variant: full colour reads poorly against the dark night map.
+    map_palette = {
+        ".": None,
+        "H": GOLD_DARK,
+        "S": GOLD_LIGHT,
+        "R": GOLD,
+        "M": GOLD_DARK,
+        "G": GOLD_LIGHT,
+        "C": GOLD,
+        "B": GOLD_DARK,
+    }
+    save(from_ascii(ADVENTURER_B, map_palette), "adventurer-map.png", 4, PIXEL_ART_DIR)
 
 
 # --------------------------------------------------------------- OG image --

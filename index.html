@@ -6,6 +6,7 @@
   <title>A New Beginning - Quest Log</title>
   <meta name="description" content="Namratha &amp; Shreyas invite you on a four-part quest across Karnataka: Naandi, Sangeet, the Wedding and the Reception, 4-9 December.">
   <meta name="theme-color" content="#1a0f02">
+  <meta name="color-scheme" content="only light">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="A New Beginning - Quest Log">
@@ -17,6 +18,8 @@
 
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/zones.css">
+  <link rel="stylesheet" href="css/navigation.css">
   <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/animation.css">
   <link rel="stylesheet" href="css/print.css">
@@ -123,6 +126,58 @@
       </div>
     </section>
 
+    <!-- Journey map (screen only) -->
+    <section class="journey screen-only" id="journey-map" aria-label="The path ahead">
+      <div class="journey__frame">
+        <h2 class="journey__title">The Path Ahead</h2>
+        <p class="journey__hint">Three cities &middot; four gatherings &middot; tap a marker to jump</p>
+
+        <svg class="journey__svg" viewBox="0 0 800 340" role="img"
+             aria-label="Route map: Ullur-74 on the coast, inland to Shivamogga, then back to Kundapur on the coast.">
+          <path class="journey__sea" d="M0,0 L120,0 C 96,80 88,180 108,340 L0,340 Z"/>
+          <text class="journey__label-sea" x="16" y="180" transform="rotate(-90 16 180)">ARABIAN SEA</text>
+
+          <path class="journey__hills" d="M470,0 C 520,70 600,60 800,30 L800,300 C 660,280 560,230 500,150 Z"/>
+          <text class="journey__label-hills" x="640" y="250">WESTERN GHATS</text>
+
+          <path class="journey__route" id="journey-route"
+                d="M230,120 C 360,52 480,58 610,96 C 500,192 330,222 140,268"/>
+
+          <g class="journey__pin" style="--pin:0" data-target="quest-1-page" role="button" tabindex="0"
+             aria-label="Quest 1, Ullur-74">
+            <circle class="journey__pin-dot" cx="230" cy="120" r="11"/>
+            <circle class="journey__pin-core" cx="230" cy="120" r="4"/>
+            <text class="journey__pin-label" x="230" y="96">Ullur-74</text>
+            <text class="journey__pin-sub" x="230" y="150">Quest 1 &middot; 4 Dec</text>
+          </g>
+
+          <g class="journey__pin" style="--pin:1" data-target="quest-2-page" role="button" tabindex="0"
+             aria-label="Quest 2, Shivamogga">
+            <circle class="journey__pin-dot" cx="610" cy="96" r="11"/>
+            <circle class="journey__pin-core" cx="610" cy="96" r="4"/>
+            <text class="journey__pin-label" x="610" y="72">Shivamogga</text>
+            <text class="journey__pin-sub" x="610" y="126">Quest 2 &middot; 5 Dec</text>
+          </g>
+
+          <g class="journey__pin" style="--pin:2" data-target="quest-3-page" role="button" tabindex="0"
+             aria-label="Quest 3, Shivamogga">
+            <circle class="journey__pin-dot journey__pin-ring" cx="610" cy="96" r="19"/>
+            <text class="journey__pin-sub" x="610" y="152">Quest 3 &middot; 6 Dec</text>
+          </g>
+
+          <g class="journey__pin" style="--pin:3" data-target="quest-4-page" role="button" tabindex="0"
+             aria-label="Quest 4, Kundapur">
+            <circle class="journey__pin-dot" cx="140" cy="268" r="11"/>
+            <circle class="journey__pin-core" cx="140" cy="268" r="4"/>
+            <text class="journey__pin-label" x="140" y="244">Kundapur</text>
+            <text class="journey__pin-sub" x="140" y="298">Quest 4 &middot; 9 Dec</text>
+          </g>
+        </svg>
+
+        <img class="journey__walker" id="journey-walker" src="assets/pixel-art/adventurer-map.png" alt="">
+      </div>
+    </section>
+
     <!-- Quest 1 Page -->
     <section class="page scroll-page" id="quest-1-page" data-quest="1">
       <div class="decorative-border-outer">
@@ -132,11 +187,18 @@
           <div class="corner-flourish bl"></div>
           <div class="corner-flourish br"></div>
           
+          <div class="quest-scene" aria-hidden="true"></div>
+
           <div class="page-content">
             <header class="quest-header">
               <img src="assets/pixel-art/shield.png" alt="" class="pixel-art-icon">
               <span class="quest-tag">Quest 1</span>
               <h2 class="quest-title">Forging Magical Armor</h2>
+              <div class="quest-stats">
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Sheshanaga, Ullur-74</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>4 Dec &middot; 9&ndash;11 AM</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 2 of 5">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+              </div>
             </header>
 
             <div class="divider-swirl"></div>
@@ -204,11 +266,18 @@
           <div class="corner-flourish bl"></div>
           <div class="corner-flourish br"></div>
           
+          <div class="quest-scene" aria-hidden="true"></div>
+
           <div class="page-content">
             <header class="quest-header">
               <img src="assets/pixel-art/star.png" alt="" class="pixel-art-icon">
               <span class="quest-tag">Quest 2</span>
               <h2 class="quest-title">The Dance Begins</h2>
+              <div class="quest-stats">
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Shivamogga</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>5 Dec &middot; 7&ndash;10 PM</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 2 of 5">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+              </div>
             </header>
 
             <div class="divider-swirl"></div>
@@ -268,11 +337,18 @@
           <div class="corner-flourish bl"></div>
           <div class="corner-flourish br"></div>
           
+          <div class="quest-scene" aria-hidden="true"></div>
+
           <div class="page-content">
             <header class="quest-header">
               <img src="assets/pixel-art/heart.png" alt="" class="pixel-art-icon">
               <span class="quest-tag critical">Quest 3: CRITICAL OBJECTIVE</span>
               <h2 class="quest-title">The Ceremony</h2>
+              <div class="quest-stats">
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Shree Matha Mangalya Mandira</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>6 Dec &middot; 7 AM&ndash;2 PM</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 5 of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+              </div>
             </header>
 
             <div class="divider-swirl"></div>
@@ -333,11 +409,18 @@
           <div class="corner-flourish bl"></div>
           <div class="corner-flourish br"></div>
           
+          <div class="quest-scene" aria-hidden="true"></div>
+
           <div class="page-content">
             <header class="quest-header">
               <img src="assets/pixel-art/firework.png" alt="" class="pixel-art-icon">
               <span class="quest-tag">Quest 4: The Epilogue</span>
               <h2 class="quest-title">The Afterparty</h2>
+              <div class="quest-stats">
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Venkata Laxmi Gardens, Kundapur</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>9 Dec &middot; 7&ndash;11 PM</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 1 of 5">&#9733;&#9734;&#9734;&#9734;&#9734;</span>
+              </div>
             </header>
 
             <div class="divider-swirl"></div>
@@ -399,6 +482,34 @@
     </section>
 
   </div>
+
+  <!-- Quest tracker rail (screen only) -->
+  <nav class="tracker screen-only" id="tracker" aria-label="Quest navigation">
+    <button type="button" class="tracker__node" data-target="intro-page">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">The Call</span>
+    </button>
+    <button type="button" class="tracker__node" data-target="journey-map">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">The Path Ahead</span>
+    </button>
+    <button type="button" class="tracker__node" data-target="quest-1-page">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">1 &middot; Forging Magical Armor</span>
+    </button>
+    <button type="button" class="tracker__node" data-target="quest-2-page">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">2 &middot; The Dance Begins</span>
+    </button>
+    <button type="button" class="tracker__node" data-target="quest-3-page">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">3 &middot; The Ceremony</span>
+    </button>
+    <button type="button" class="tracker__node" data-target="quest-4-page">
+      <span class="tracker__dot"></span>
+      <span class="tracker__label">4 &middot; The Afterparty</span>
+    </button>
+  </nav>
 
   <script src="script.js"></script>
 </body>

@@ -5,6 +5,12 @@
    ========================================================================== */
 
 :root {
+  /* This design is hand-tuned parchment-and-ink. Chrome's "Auto Dark Mode for
+     Web Contents" repaints it at the compositor level — inverting the
+     parchment and the body copy — which leaves light text on light paper.
+     Declaring the page light-only opts out of that inversion entirely. */
+  color-scheme: only light;
+
   /* Parchment & ink */
   --parchment-dark: #2c1a04;
   --text-dark: #3a2712;

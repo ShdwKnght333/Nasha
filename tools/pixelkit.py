@@ -79,6 +79,13 @@ def column(img: Image.Image, x: int, y0: int, y1: int, color) -> None:
         px(img, x, y, color)
 
 
+def rect(img: Image.Image, x0: int, y0: int, x1: int, y1: int, color) -> None:
+    """Filled rectangle, inclusive of x0/y0 and exclusive of x1/y1."""
+    for x in range(x0, x1):
+        for y in range(y0, y1):
+            px(img, x, y, color)
+
+
 def from_ascii(rows, palette=None) -> Image.Image:
     """Build an image from a list of equal-length strings.
 
