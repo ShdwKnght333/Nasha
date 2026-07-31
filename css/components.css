@@ -1,0 +1,388 @@
+/* ==========================================================================
+   COMPONENTS — control panel, headers, typography, panels, buttons, QR
+   ========================================================================== */
+
+/* Control Panel (Hidden in print) */
+.control-panel {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background: rgba(13, 7, 1, 0.85);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 2px solid var(--gold-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+  border: 2px solid var(--gold-light);
+  color: #fff;
+  padding: 12px 28px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(179, 134, 43, 0.4);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+}
+
+.btn-primary .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Headers */
+.quest-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.pixel-art-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 8px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+.main-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 2.2rem;
+  color: var(--crimson-dark);
+  margin: 0 0 10px 0;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+  letter-spacing: 1px;
+}
+
+.subtitle {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.quest-tag {
+  font-family: 'MedievalSharp', cursive;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  color: var(--gold-dark);
+  display: inline-block;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 3px;
+  margin-bottom: 5px;
+}
+
+.quest-tag.critical {
+  color: var(--crimson-dark);
+  border-color: var(--crimson-dark);
+  font-weight: bold;
+}
+
+.quest-title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 1.8rem;
+  color: var(--parchment-dark);
+  margin: 5px 0;
+}
+
+/* Dividers */
+.divider-swirl {
+  height: 25px;
+  background-image: radial-gradient(circle, var(--gold-primary) 15%, transparent 20%),
+                    linear-gradient(to right, transparent, var(--gold-primary), transparent);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 15px 15px, 80% 2px;
+  margin: 15px 0 25px 0;
+}
+
+/* Typography styles */
+.greeting {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Crossed out styles */
+.text-crossed {
+  text-decoration: line-through;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+.class-callout {
+  border-left: 3px solid var(--gold-primary);
+  padding-left: 15px;
+  margin: 20px 0;
+  font-family: 'MedievalSharp', cursive;
+}
+
+.class-callout p {
+  margin: 5px 0;
+}
+
+.need-presence {
+  font-size: 1.15rem;
+  color: var(--crimson-dark);
+  font-weight: bold;
+}
+
+.dbz-outro {
+  font-size: 0.9rem;
+  margin-top: 30px;
+  text-align: center;
+}
+
+/* Quests Content Area */
+.quest-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  position: relative;
+  padding-bottom: 72px;
+}
+
+.intro-adventure {
+  font-style: italic;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Detail panels */
+.details-section {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent);
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.details-section h3 {
+  font-family: 'MedievalSharp', cursive;
+  margin-top: 0;
+  color: var(--parchment-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.side-quests-list,
+.travel-directions {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.side-quests-list li,
+.travel-directions li {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.side-quests-list li::marker,
+.travel-directions li::marker {
+  color: var(--accent);
+}
+
+.quest-details-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.section-intro {
+  font-size: 0.98rem;
+  margin-bottom: 12px;
+}
+
+.gear-text {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  color: var(--crimson-dark);
+  margin: 0;
+}
+
+.critical-announcement {
+  font-weight: bold;
+  border-left: 4px solid var(--crimson-dark);
+  padding-left: 15px;
+  color: var(--crimson-dark);
+  font-size: 1.05rem;
+}
+
+.concluding-question {
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.2rem;
+  color: var(--crimson-dark);
+  text-align: center;
+  font-style: italic;
+  margin: 25px 0;
+}
+
+.quest-summary-highlight {
+  background: rgba(179, 134, 43, 0.08);
+  border: 1px dashed var(--gold-primary);
+  padding: 18px;
+  border-radius: 4px;
+  margin: 25px 0;
+  font-weight: 600;
+}
+
+/* Save the date */
+.save-date-wrapper {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2;
+}
+
+.save-date-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 132px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 2px solid var(--gold-primary);
+  background: linear-gradient(135deg, rgba(255, 242, 210, 0.96) 0%, rgba(214, 169, 78, 0.96) 100%);
+  color: var(--parchment-dark);
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+.save-date-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.save-date-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(122, 88, 19, 0.28);
+  filter: brightness(1.03);
+}
+
+/* QR codes */
+.qr-container-wrapper {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  transform: none;
+  z-index: 2;
+  width: 86px;
+  height: 86px;
+  flex: none;
+}
+
+.qr-container-wrapper a {
+  display: flex;
+  width: 86px;
+  height: 86px;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-container-wrapper .qr-border {
+  border: 2px solid var(--gold-primary);
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 86px !important;
+  height: 86px !important;
+  min-width: 86px !important;
+  min-height: 86px !important;
+  max-width: 86px !important;
+  max-height: 86px !important;
+  flex: none;
+  padding: 6px;
+}
+
+.qr-container-wrapper .qr-image {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  object-fit: contain;
+  flex: none;
+  display: block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.qr-image:hover {
+  transform: scale(1.1);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .quest-body {
+    padding-bottom: 62px;
+  }
+
+  .save-date-wrapper {
+    left: 12px;
+    bottom: 12px;
+  }
+
+  .save-date-button {
+    min-width: 120px;
+    min-height: 40px;
+    padding: 8px 14px;
+    font-size: 0.88rem;
+  }
+
+  .qr-container-wrapper {
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+  }
+
+  .qr-container-wrapper,
+  .qr-container-wrapper a,
+  .qr-container-wrapper .qr-border {
+    width: 86px;
+    height: 86px;
+    min-width: 86px;
+    min-height: 86px;
+    max-width: 86px;
+    max-height: 86px;
+  }
+
+  .qr-container-wrapper .qr-image {
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+  }
+}

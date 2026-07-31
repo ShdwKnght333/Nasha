@@ -1,0 +1,379 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ==========================================================================
+   HERO — full-viewport animated cover. Screen-only; stripped by print.css.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  isolation: isolate;
+  background: linear-gradient(
+    180deg,
+    #120a01 0%,
+    #1a0f02 22%,
+    #3d263a 52%,
+    #7d4340 72%,
+    #b0603a 86%,
+    #e89e4a 100%
+  );
+}
+
+/* --- particle canvas (stars + embers) --- */
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* --- parallax ridge layers --- */
+.hero__layer {
+  position: absolute;
+  left: -10%;
+  bottom: 0;
+  width: 120%;
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto 100%;
+  image-rendering: pixelated;
+  z-index: 2;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero__layer--far {
+  height: 46vh;
+  background-image: url('../assets/scenery/ridge-far.png');
+  opacity: 0.92;
+}
+
+.hero__layer--near {
+  height: 34vh;
+  background-image: url('../assets/scenery/ridge-near.png');
+  z-index: 3;
+}
+
+.hero__layer--fore {
+  height: 20vh;
+  background-image: url('../assets/scenery/ridge-fore.png');
+  z-index: 5;
+}
+
+/* --- adventurers standing on the near ridge --- */
+.hero__cast {
+  position: absolute;
+  left: 50%;
+  bottom: 14vh;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  z-index: 4;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero__cast img {
+  width: 48px;
+  height: 80px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 12px rgba(232, 158, 74, 0.35));
+}
+
+.hero__cast img:first-child { animation: hero-bob 3.6s ease-in-out infinite; }
+.hero__cast img:last-child  { animation: hero-bob 3.6s ease-in-out infinite 0.5s; }
+
+@keyframes hero-bob {
+  50% { transform: translateY(-4px); }
+}
+
+/* --- foreground content --- */
+.hero__content {
+  position: relative;
+  z-index: 6;
+  padding: 0 24px;
+  max-width: 760px;
+  margin-bottom: 14vh;
+}
+
+.hero__sigil {
+  width: 84px;
+  height: 84px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
+  animation: hero-bob 3.2s ease-in-out infinite;
+}
+
+.hero__eyebrow {
+  font-family: 'MedievalSharp', cursive;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.8rem;
+  color: #d8b877;
+  margin: 10px 0 4px;
+}
+
+.hero__title {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(2.1rem, 7vw, 4.2rem);
+  line-height: 1.1;
+  margin: 0 0 6px;
+  letter-spacing: 2px;
+  background: linear-gradient(
+    100deg,
+    #8a6418 0%,
+    #b3862b 30%,
+    #ffd700 46%,
+    #fff8dc 50%,
+    #ffd700 54%,
+    #b3862b 70%,
+    #8a6418 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-shimmer 6s linear infinite;
+}
+
+@keyframes hero-shimmer {
+  to { background-position: -300% 0; }
+}
+
+.hero__subtitle {
+  font-family: 'Lora', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  color: #f0dfc0;
+  min-height: 3.2em;
+  margin: 0 auto 22px;
+  max-width: 34em;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.hero__caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--gold-light);
+  animation: hero-caret 1s steps(1) infinite;
+}
+
+.hero__caret[hidden] { display: none; }
+
+@keyframes hero-caret {
+  50% { opacity: 0; }
+}
+
+/* --- countdown --- */
+.hero__countdown {
+  margin: 0 0 26px;
+}
+
+.countdown__label {
+  display: block;
+  font-family: 'Press Start 2P', 'MedievalSharp', cursive;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d8b877;
+  margin-bottom: 12px;
+}
+
+.countdown__units {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.countdown__unit {
+  min-width: 74px;
+  padding: 10px 6px 8px;
+  background: rgba(13, 7, 1, 0.55);
+  border: 2px solid var(--gold-dark);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 215, 0, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.countdown__value {
+  display: block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.15rem;
+  color: var(--gold-light);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.45);
+}
+
+.countdown__name {
+  display: block;
+  margin-top: 7px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.68rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #c9ab74;
+}
+
+.hero__countdown.is-begun .countdown__units { display: none; }
+
+.hero__countdown.is-begun .countdown__label {
+  font-size: 0.8rem;
+  color: var(--gold-light);
+}
+
+/* --- calls to action --- */
+.hero__cta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btn-quest {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  font-family: 'Press Start 2P', 'MedievalSharp', cursive;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  color: #2c1a04;
+  background: linear-gradient(180deg, #ffd700 0%, #b3862b 55%, #8a6418 100%);
+  border: 2px solid #5c3f0c;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.28),
+    0 5px 0 #4a3308,
+    0 8px 18px rgba(0, 0, 0, 0.5);
+  transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, filter 0.2s ease;
+}
+
+.btn-quest:hover {
+  filter: brightness(1.08);
+}
+
+.btn-quest:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 0 #4a3308,
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.btn-quest--ghost {
+  color: #f0dfc0;
+  background: rgba(13, 7, 1, 0.5);
+  border-color: var(--gold-dark);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 215, 0, 0.12),
+    0 5px 0 rgba(0, 0, 0, 0.45),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+.btn-quest .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* --- scroll hint --- */
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  animation: hero-hint 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hero-hint {
+  0%, 100% { transform: translate(-50%, 0); opacity: 0.55; }
+  50%      { transform: translate(-50%, 8px); opacity: 1; }
+}
+
+/* --- entrance --- */
+.hero__content > * {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero__content > :nth-child(1) { animation-delay: 0.10s; }
+.hero__content > :nth-child(2) { animation-delay: 0.22s; }
+.hero__content > :nth-child(3) { animation-delay: 0.34s; }
+.hero__content > :nth-child(4) { animation-delay: 0.46s; }
+.hero__content > :nth-child(5) { animation-delay: 0.58s; }
+.hero__content > :nth-child(6) { animation-delay: 0.70s; }
+
+@keyframes hero-rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* The title keeps its own shimmer animation, so it rises via a wrapper-free
+   fade instead of competing for the animation property. */
+.hero__title {
+  opacity: 1;
+  transform: none;
+  animation: hero-shimmer 6s linear infinite;
+}
+
+/* --- control panel now reveals only after the hero scrolls away --- */
+/* Fixed rather than sticky: a sticky bar sits exactly at the fold, where a
+   translate alone cannot move it clear of the viewport. */
+.control-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Opaque now that it overlays content rather than occupying flow space. */
+  background: rgba(11, 6, 1, 0.96);
+  backdrop-filter: blur(6px);
+  transform: translateY(-110%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.25s ease,
+              visibility 0s linear 0.35s;
+}
+
+.control-panel.is-revealed {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+@media (max-width: 600px) {
+  .hero__content { margin-bottom: 10vh; }
+  .hero__sigil { width: 62px; height: 62px; }
+  .countdown__unit { min-width: 60px; padding: 8px 4px 6px; }
+  .countdown__value { font-size: 0.9rem; }
+  .countdown__name { font-size: 0.58rem; }
+  .btn-quest { padding: 12px 18px; font-size: 0.6rem; }
+  .hero__cast img { width: 36px; height: 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__content > * { opacity: 1; transform: none; }
+  .hero__caret { display: none; }
+}

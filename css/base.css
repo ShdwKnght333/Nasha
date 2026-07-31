@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Lora:ital,wght@0,400;0,600;1,400&family=MedievalSharp&display=swap');
+
+/* ==========================================================================
+   BASE — design tokens, reset, page/parchment substrate, decorative frame
+   ========================================================================== */
+
+:root {
+  /* Parchment & ink */
+  --parchment-dark: #2c1a04;
+  --text-dark: #3a2712;
+  --text-light: #5c4021;
+  --border-color: rgba(122, 88, 19, 0.4);
+
+  /* Gold */
+  --gold-primary: #b3862b;
+  --gold-dark: #7a5813;
+  --gold-light: #ffd700;
+
+  /* Crimson */
+  --crimson-dark: #6e0000;
+
+  /* Game-semantic palette (wired up in later phases) */
+  --mana-blue: #2f5d8c;
+  --xp-green: #4f7a2b;
+  --boss-red: #8c1c13;
+  --rarity-rare: #3a7bd5;
+  --rarity-epic: #8a4fbd;
+  --rarity-legendary: #e0862b;
+  --ink-blot: rgba(58, 39, 18, 0.12);
+
+  /* Default accent; overridden per quest below */
+  --accent: var(--gold-dark);
+}
+
+/* Per-quest accent zones. Declared now, applied in Phase 4. */
+.page[data-quest="1"] { --accent: var(--rarity-legendary); }
+.page[data-quest="2"] { --accent: var(--rarity-epic); }
+.page[data-quest="3"] { --accent: var(--boss-red); }
+.page[data-quest="4"] { --accent: var(--rarity-rare); }
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #1a0f02;
+  background-image: radial-gradient(circle, #2d1b09 0%, #0d0701 100%);
+  color: var(--text-dark);
+  font-family: 'Lora', Georgia, serif;
+  line-height: 1.6;
+}
+
+/* Main Container */
+.book-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Parchment Page Base styling */
+.page {
+  background-color: #f7ebd3;
+  background-image: url('../parchment_bg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 45px 45px 45px 45px / 18px 18px 18px 18px;
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  min-height: 1050px; /* Golden Ratio aspect */
+  --scroll-rod-size: 22px;
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    inset 0 0 100px rgba(139, 90, 43, 0.15),
+    inset 0 14px 18px -12px rgba(58, 39, 18, 0.55),
+    inset 0 -14px 18px -12px rgba(58, 39, 18, 0.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Scroll rod caps - simulate the parchment being rolled around a rod at the top & bottom */
+.page::before,
+.page::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--scroll-rod-size);
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.55) 0%, transparent 35%),
+    linear-gradient(180deg, #f4d78a 0%, #b3862b 30%, #7a5813 55%, #b3862b 80%, #4a3308 100%);
+  z-index: 0;
+  pointer-events: none;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.page::before {
+  top: 0;
+  border-radius: 45px 45px 0 0 / 18px 18px 0 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.page::after {
+  bottom: 0;
+  border-radius: 0 0 45px 45px / 0 0 18px 18px;
+  box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Decorative Border system */
+.decorative-border-outer {
+  border: 12px double var(--gold-dark);
+  margin: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.decorative-border-inner {
+  border: 2px solid var(--border-color);
+  margin: 4px;
+  padding: 30px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Corner Flourishes */
+.corner-flourish {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--gold-primary);
+  pointer-events: none;
+}
+.corner-flourish.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.corner-flourish.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.corner-flourish.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.corner-flourish.br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+.corner-flourish::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--gold-primary);
+  border-radius: 50%;
+}
+.corner-flourish.tl::before { top: 6px; left: 6px; }
+.corner-flourish.tr::before { top: 6px; right: 6px; }
+.corner-flourish.bl::before { bottom: 6px; left: 6px; }
+.corner-flourish.br::before { bottom: 6px; right: 6px; }
+
+/* Page Content */
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Visually hidden, still read by assistive tech */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -4,22 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A New Beginning - Quest Log</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Namratha &amp; Shreyas invite you on a four-part quest across Karnataka: Naandi, Sangeet, the Wedding and the Reception, 4-9 December.">
+  <meta name="theme-color" content="#1a0f02">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A New Beginning - Quest Log">
+  <meta property="og:description" content="Namratha &amp; Shreyas invite you on a four-part quest across Karnataka: Naandi, Sangeet, the Wedding and the Reception, 4-9 December.">
+  <meta property="og:image" content="assets/og-quest-log.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/pixel-art/crossed-swords.png" type="image/png">
+
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/animation.css">
+  <link rel="stylesheet" href="css/print.css">
 </head>
 <body>
 
+  <!-- Animated cover (screen only) -->
+  <header class="hero screen-only" id="hero">
+    <canvas class="hero__particles" id="hero-particles" aria-hidden="true"></canvas>
+
+    <div class="hero__layer hero__layer--far" data-depth="0.08" aria-hidden="true"></div>
+    <div class="hero__layer hero__layer--near" data-depth="0.16" aria-hidden="true"></div>
+
+    <div class="hero__cast" data-depth="0.22" aria-hidden="true">
+      <img src="assets/pixel-art/adventurer-a.png" alt="">
+      <img src="assets/pixel-art/adventurer-b.png" alt="">
+    </div>
+
+    <div class="hero__layer hero__layer--fore" data-depth="0.30" aria-hidden="true"></div>
+
+    <div class="hero__content">
+      <img src="assets/pixel-art/crossed-swords.png" alt="" class="hero__sigil">
+      <p class="hero__eyebrow">Namratha &amp; Shreyas present</p>
+      <h1 class="hero__title">A New Beginning</h1>
+
+      <p class="hero__subtitle">
+        <span class="sr-only">Not every adventure ends victorious&hellip; But this begins with a choice. Will you join?</span>
+        <span class="hero__typed" data-text="Not every adventure ends victorious&hellip; But this begins with a choice. Will you join?" aria-hidden="true"></span><span class="hero__caret" aria-hidden="true"></span>
+      </p>
+
+      <div class="hero__countdown" id="hero-countdown" data-target="2026-12-04T09:00:00+05:30">
+        <span class="countdown__label">The quest begins in</span>
+        <div class="countdown__units">
+          <div class="countdown__unit"><span class="countdown__value" data-unit="days">--</span><span class="countdown__name">Days</span></div>
+          <div class="countdown__unit"><span class="countdown__value" data-unit="hours">--</span><span class="countdown__name">Hours</span></div>
+          <div class="countdown__unit"><span class="countdown__value" data-unit="minutes">--</span><span class="countdown__name">Mins</span></div>
+          <div class="countdown__unit"><span class="countdown__value" data-unit="seconds">--</span><span class="countdown__name">Secs</span></div>
+        </div>
+      </div>
+
+      <div class="hero__cta">
+        <a class="btn-quest" href="#intro-page" data-action="scroll-to">Accept the Quest</a>
+        <button type="button" class="btn-quest btn-quest--ghost" data-action="print">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 7H6V3h12v4zm0 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM16 19H8v-5h8v5zm2-7H6V9H4v8h4v4h8v-4h4v-8h-2v3z"/></svg>
+          Save as PDF
+        </button>
+      </div>
+    </div>
+
+    <div class="hero__scroll-hint" aria-hidden="true">&#9660;</div>
+  </header>
+
   <!-- Controls (hidden in print) -->
-  <div class="control-panel">
-    <button onclick="window.print()" class="btn-primary">
+  <div class="control-panel screen-only">
+    <button type="button" class="btn-primary" data-action="print">
       <svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M18 7H6V3h12v4zm0 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM16 19H8v-5h8v5zm2-7H6V9H4v8h4v4h8v-4h4v-8h-2v3z"/></svg>
       Print / Save as PDF
     </button>
+    <div class="quest-progress" aria-hidden="true"><span class="quest-progress__fill" id="quest-progress-fill"></span></div>
   </div>
 
   <div class="book-container">
     
     <!-- Title & Intro Page -->
-    <section class="page scroll-page" id="intro-page">
+    <section class="page scroll-page" id="intro-page" data-quest="0">
       <div class="decorative-border-outer">
         <div class="decorative-border-inner">
           <div class="corner-flourish tl"></div>
@@ -62,7 +124,7 @@
     </section>
 
     <!-- Quest 1 Page -->
-    <section class="page scroll-page" id="quest-1-page">
+    <section class="page scroll-page" id="quest-1-page" data-quest="1">
       <div class="decorative-border-outer">
         <div class="decorative-border-inner">
           <div class="corner-flourish tl"></div>
@@ -134,7 +196,7 @@
     </section>
 
     <!-- Quest 2 Page -->
-    <section class="page scroll-page" id="quest-2-page">
+    <section class="page scroll-page" id="quest-2-page" data-quest="2">
       <div class="decorative-border-outer">
         <div class="decorative-border-inner">
           <div class="corner-flourish tl"></div>
@@ -198,7 +260,7 @@
     </section>
 
     <!-- Quest 3 Page -->
-    <section class="page scroll-page" id="quest-3-page">
+    <section class="page scroll-page" id="quest-3-page" data-quest="3">
       <div class="decorative-border-outer">
         <div class="decorative-border-inner">
           <div class="corner-flourish tl"></div>
@@ -263,7 +325,7 @@
     </section>
 
     <!-- Quest 4 Page -->
-    <section class="page scroll-page" id="quest-4-page">
+    <section class="page scroll-page" id="quest-4-page" data-quest="4">
       <div class="decorative-border-outer">
         <div class="decorative-border-inner">
           <div class="corner-flourish tl"></div>
