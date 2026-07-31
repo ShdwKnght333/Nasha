@@ -1,0 +1,148 @@
+/* ==========================================================================
+   QUEST ZONES — per-quest scene bands, watermarks and themed dividers.
+
+   The scene band is absolutely positioned so it contributes NO layout height.
+   That is what keeps each section fitting on a single A4 page.
+   ========================================================================== */
+
+/* --- zone assets --------------------------------------------------------- */
+.page[data-quest="1"] {
+  --scene: url('../assets/scenery/scene-forge.png');
+  --sigil: url('../assets/pixel-art/shield.png');
+}
+
+.page[data-quest="2"] {
+  --scene: url('../assets/scenery/scene-stage.png');
+  --sigil: url('../assets/pixel-art/star.png');
+}
+
+.page[data-quest="3"] {
+  --scene: url('../assets/scenery/scene-homa.png');
+  --sigil: url('../assets/pixel-art/heart.png');
+}
+
+.page[data-quest="4"] {
+  --scene: url('../assets/scenery/scene-coast.png');
+  --sigil: url('../assets/pixel-art/firework.png');
+}
+
+.page[data-quest="0"] {
+  --sigil: url('../assets/pixel-art/crossed-swords.png');
+}
+
+/* --- scene band ---------------------------------------------------------- */
+.quest-scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 172px;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--scene);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  image-rendering: pixelated;
+  opacity: 0.8;
+  /* Two masks intersected: fade downward into the parchment, and inward from
+     the left/right so the band never shows a rectangular edge. */
+  -webkit-mask-image:
+    linear-gradient(180deg, #000 0%, #000 42%, transparent 96%),
+    linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+          mask-image:
+    linear-gradient(180deg, #000 0%, #000 42%, transparent 96%),
+    linear-gradient(90deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-composite: intersect;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* --- watermark sigil ----------------------------------------------------- */
+.decorative-border-inner::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  width: 260px;
+  height: 260px;
+  transform: translateX(-50%);
+  background-image: var(--sigil);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* --- ambient motes ------------------------------------------------------- */
+.quest-ambience {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Content must sit above the band, the watermark and the motes. */
+.page-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- themed divider ------------------------------------------------------ */
+/* The centre medallion becomes the quest's own sigil.
+   Only `background-image` is set here: `background-size` is left to
+   animation.css, which needs to drive it for the wipe-in. */
+.page[data-quest] .divider-swirl {
+  background-image: var(--sigil), linear-gradient(to right, transparent, var(--accent), transparent);
+}
+
+.page[data-quest="0"] .divider-swirl {
+  background-image: var(--sigil), linear-gradient(to right, transparent, var(--gold-primary), transparent);
+}
+
+/* --- quest stat row ------------------------------------------------------ */
+.quest-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 8px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.82rem;
+  color: var(--text-light);
+}
+
+.quest-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.quest-stat svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--accent);
+}
+
+.quest-stat--difficulty {
+  letter-spacing: 2px;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  .quest-scene { height: 130px; }
+  .decorative-border-inner::before { width: 190px; height: 190px; }
+  .quest-stats { font-size: 0.74rem; gap: 4px 10px; }
+}

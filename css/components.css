@@ -108,7 +108,7 @@
                     linear-gradient(to right, transparent, var(--gold-primary), transparent);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 15px 15px, 80% 2px;
+  background-size: 24px 24px, 80% 2px;
   margin: 15px 0 25px 0;
 }
 

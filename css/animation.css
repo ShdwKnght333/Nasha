@@ -97,7 +97,7 @@
   @keyframes divider-wipe {
     from { background-size: 0 0, 0% 2px; }
     60%  { background-size: 0 0, 80% 2px; }
-    to   { background-size: 15px 15px, 80% 2px; }
+    to   { background-size: 24px 24px, 80% 2px; }
   }
 
   /* --- the crossed-out lines strike themselves through ---------------- */
@@ -176,6 +176,27 @@
 
   @keyframes icon-bob {
     50% { transform: translateY(-5px); }
+  }
+
+  /* The scene band drifts slowly, so each quest page reads as a live place
+     rather than a static illustration. */
+  .quest-scene {
+    animation: scene-drift 44s ease-in-out infinite alternate;
+  }
+
+  @keyframes scene-drift {
+    from { background-position: 44% top; }
+    to   { background-position: 56% top; }
+  }
+
+  /* The watermark sigil breathes. */
+  .decorative-border-inner::before {
+    animation: sigil-breathe 9s ease-in-out infinite;
+  }
+
+  @keyframes sigil-breathe {
+    0%, 100% { opacity: 0.045; transform: translateX(-50%) scale(1); }
+    50%      { opacity: 0.085; transform: translateX(-50%) scale(1.04); }
   }
 
   /* Quest 3 is the boss encounter: give the alert a slow red heartbeat. */
