@@ -761,17 +761,36 @@
   .objective__xp { grid-column: 2; justify-self: start; }
   .route { grid-template-columns: 26px minmax(0, 1fr); }
   .route__cost { grid-column: 2; justify-self: start; }
-  .inventory__card { left: 0; top: calc(100% + 10px); transform: translateY(-4px); }
-  .inventory__slot:hover .inventory__card,
-  .inventory__slot:focus .inventory__card { transform: translateY(0); }
+  .inventory { display: grid; grid-template-columns: repeat(3, 52px); }
+  .inventory__card { display: none; }
+  .inventory__slot:focus {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: 52px minmax(0, 1fr);
+    justify-content: start;
+    width: 100%;
+    height: auto;
+    min-height: 52px;
+    gap: 10px;
+    padding: 6px;
+  }
+  .inventory__slot:focus .inventory__card {
+    position: static;
+    display: flex;
+    width: auto;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
 
   .quest-body {
     padding-bottom: 62px;
   }
 
   .save-date-wrapper {
-    left: 12px;
-    bottom: 12px;
+    position: static;
+    align-self: flex-start;
+    margin-top: 2px;
   }
 
   .save-date-button {
@@ -782,9 +801,9 @@
   }
 
   .qr-container-wrapper {
-    right: 12px;
-    bottom: 12px;
-    transform: none;
+    position: static;
+    align-self: flex-end;
+    margin-top: -2px;
   }
 
   .qr-container-wrapper,
