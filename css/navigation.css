@@ -197,6 +197,20 @@
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 0 2px rgba(11, 6, 1, 0.9);
 }
 
+.tracker__rsvp {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--gold-primary);
+  border-radius: 50%;
+  background: var(--gold-primary);
+  color: #1a0f02;
+  cursor: pointer;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.48rem;
+  font-weight: bold;
+}
+
 /* Label flies out on hover / when current */
 .tracker__label {
   position: absolute;
@@ -244,6 +258,8 @@
   .tracker__node:focus-visible .tracker__label {
     transform: translate(-50%, 0);
   }
+
+  .tracker__rsvp { width: 26px; height: 22px; border-radius: 3px; }
 }
 
 @media (max-width: 600px) {

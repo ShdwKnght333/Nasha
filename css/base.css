@@ -79,7 +79,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 800px;
-  min-height: 1050px; /* Golden Ratio aspect */
+  min-height: min(1050px, 140vw); /* Golden Ratio aspect */
   --scroll-rod-size: 22px;
   box-shadow:
     0 15px 35px rgba(0, 0, 0, 0.6),

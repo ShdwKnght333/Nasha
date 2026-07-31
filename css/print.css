@@ -25,6 +25,10 @@
     display: block !important;
   }
 
+  .save-date-wrapper.screen-only {
+    display: none !important;
+  }
+
   .save-date-button {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -207,6 +211,68 @@
   .travel-directions {
     margin: 0 !important;
     padding-left: 16px !important;
+  }
+
+  .objectives {
+    list-style: none !important;
+    padding-left: 0 !important;
+  }
+
+  .objective {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    font: inherit !important;
+    text-align: left !important;
+  }
+
+  .objective__box {
+    display: inline !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 5px 0 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .objective__box::after {
+    content: '\2610' !important;
+    position: static !important;
+    display: inline !important;
+    width: auto !important;
+    height: auto !important;
+    border: 0 !important;
+    color: #000 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .objective.is-complete .objective__box::after { content: '\2611' !important; }
+
+  .objective__text {
+    color: inherit !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+  }
+
+  .objective__xp,
+  .quest-xp { display: none !important; }
+
+  .gear-text--print { display: block !important; }
+
+  .dialogue-print { display: block !important; }
+
+  .travel-routes { list-style: disc !important; padding-left: 16px !important; }
+
+  .route {
+    display: list-item !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: visible !important;
   }
 
   #intro-page .quest-header {
