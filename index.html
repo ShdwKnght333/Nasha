@@ -61,12 +61,16 @@
       </div>
 
       <div class="hero__cta">
-        <a class="btn-quest" href="#intro-page" data-action="scroll-to">Accept the Quest</a>
+        <button type="button" class="btn-quest" data-action="rsvp">Accept the Quest</button>
+        <a class="btn-quest btn-quest--ghost" href="calendar/all-quests.ics" download="all-quests.ics">Add All Quests</a>
+        <button type="button" class="btn-quest btn-quest--ghost" data-action="share"><span data-share-label>Share</span></button>
+        <button type="button" class="btn-quest btn-quest--ghost" data-action="sound" aria-pressed="false"><span data-sound-label>Sound Off</span></button>
         <button type="button" class="btn-quest btn-quest--ghost" data-action="print">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18 7H6V3h12v4zm0 5.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5-1.5.67-1.5 1.5.67 1.5 1.5 1.5zM16 19H8v-5h8v5zm2-7H6V9H4v8h4v4h8v-4h4v-8h-2v3z"/></svg>
           Save as PDF
         </button>
       </div>
+      <span class="sr-only" id="share-status" aria-live="polite"></span>
     </div>
 
     <div class="hero__scroll-hint" aria-hidden="true">&#9660;</div>
@@ -102,8 +106,19 @@
             <div class="divider-swirl"></div>
 
             <main class="quest-intro-body">
-              <p class="greeting">Hello fellow Adventurers,</p>
-              <p>We, Namratha Holla and Shreyas Hebbar, are inviting you to journey on a quest to ne’er before seen lands on a journey I had not foreseen. And we need your help to see it through!</p>
+              <div class="dialogue screen-only" id="intro-dialogue" aria-live="polite">
+                <img class="dialogue__portrait" src="assets/pixel-art/adventurer-a.png" alt="">
+                <div class="dialogue__body">
+                  <span class="dialogue__speaker">NAMRATHA &amp; SHREYAS</span>
+                  <p class="dialogue__text" data-text="Hello fellow Adventurers, We, Namratha Holla and Shreyas Hebbar, are inviting you to journey on a quest to ne&rsquo;er before seen lands on a journey I had not foreseen. And we need your help to see it through!">Hello fellow Adventurers, We, Namratha Holla and Shreyas Hebbar, are inviting you to journey on a quest to ne&rsquo;er before seen lands on a journey I had not foreseen. And we need your help to see it through!</p>
+                  <span class="dialogue__continue" aria-hidden="true">&#9660;</span>
+                </div>
+                <img class="dialogue__portrait dialogue__portrait--right" src="assets/pixel-art/adventurer-b.png" alt="">
+              </div>
+              <div class="dialogue-print">
+                <p class="greeting">Hello fellow Adventurers,</p>
+                <p>We, Namratha Holla and Shreyas Hebbar, are inviting you to journey on a quest to ne&rsquo;er before seen lands on a journey I had not foreseen. And we need your help to see it through!</p>
+              </div>
 
               <div class="class-callout">
                 <p class="not-class text-crossed">Not as a Hero, a Warrior or even a Champion!</p>
@@ -197,7 +212,11 @@
               <div class="quest-stats">
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Sheshanaga, Ullur-74</span>
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>4 Dec &middot; 9&ndash;11 AM</span>
-                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 2 of 5">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 1 of 5">&#9733;&#9734;&#9734;&#9734;&#9734;</span>
+              </div>
+              <div class="quest-xp" data-quest-xp="1" aria-label="Quest 1 experience: 0 of 100">
+                <span class="quest-xp__label">XP <output class="quest-xp__value">0</output>/<span class="quest-xp__total">100</span></span>
+                <span class="quest-xp__track" aria-hidden="true"><span class="quest-xp__fill"></span></span>
               </div>
             </header>
 
@@ -211,36 +230,44 @@
               <div class="quest-details-stack">
                 <div class="details-section">
                   <h3>Optional Side Quests</h3>
-                  <ul class="side-quests-list">
-                    <li>Explore the new home constructed on the Farm</li>
-                    <li>Visit the local Deity temples, similar to the ones depicted in Kantara.</li>
+                  <ul class="side-quests-list objectives" data-quest="1">
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q1-farm" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Explore the new home constructed on the Farm</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q1-temples" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Visit the local Deity temples, similar to the ones depicted in Kantara.</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
                   </ul>
                 </div>
 
                 <div class="details-section">
                   <h3>How to reach the Quest Area</h3>
                   <p class="section-intro">So, adventurer, how do you reach the Home base? Well that is up to you, whether you choose to Fly here, use the railroad, on horseback or just snap your fingers and just apparate there from thin air, is all on you. These are some of the ways I believe you can make it there.</p>
-                  <ul class="travel-directions">
-                    <li>Get a Flight to Mangalore Airport (IXE), then catch a Bus to Kundapur City or Udupi City and then a Private Cab to the location from there (about 30-50 km) or get a Cab directly from the Airport to the location (about 120 km)</li>
-                    <li>Catch a train to Kundapur Railway Station or Udupi Railway Station, then a private Cab to the location (about 25-50 km)</li>
-                    <li>Catch a bus to Kundapur City or Udupi City, then a private Cab to the location (30 – 50km)</li>
-                    <li>Drive yourself to the location, would not suggest a very large vehicle as you will have to travel on multiple small village roads, in slightly hilly areas.</li>
+                  <ul class="travel-directions travel-routes">
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-plane.png" alt="Plane"><span class="route__description">Get a Flight to Mangalore Airport (IXE), then catch a Bus to Kundapur City or Udupi City and then a Private Cab to the location from there (about 30-50 km) or get a Cab directly from the Airport to the location (about 120 km)</span><span class="route__cost screen-only">30-120 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-train.png" alt="Train"><span class="route__description">Catch a train to Kundapur Railway Station or Udupi Railway Station, then a private Cab to the location (about 25-50 km)</span><span class="route__cost screen-only">25-50 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-bus.png" alt="Bus"><span class="route__description">Catch a bus to Kundapur City or Udupi City, then a private Cab to the location (30 – 50km)</span><span class="route__cost screen-only">30-50 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-car.png" alt="Car"><span class="route__description">Drive yourself to the location, would not suggest a very large vehicle as you will have to travel on multiple small village roads, in slightly hilly areas.</span><span class="route__cost screen-only">Local roads</span></li>
                   </ul>
                 </div>
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <p class="gear-text">Any Casual, Formal or Traditional Clothes</p>
+                  <div class="inventory screen-only" aria-label="Suggested gear: Casual, Formal, or Traditional clothes">
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128087;</span><span class="inventory__card"><strong>CASUAL ATTIRE</strong><span>Rarity: Common</span><span>+1 Comfort</span></span></span>
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128084;</span><span class="inventory__card"><strong>FORMAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+2 Poise</span></span></span>
+                    <span class="inventory__slot" tabindex="0"><img class="inventory__art" src="assets/pixel-art/traditional-kurta.png" alt=""><span class="inventory__card"><strong>TRADITIONAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+3 Blessing</span></span></span>
+                  </div>
+                  <p class="gear-text gear-text--print">Any Casual, Formal or Traditional Clothes</p>
                 </div>
               </div>
 
-              <div class="save-date-wrapper">
-                <a href="calendar/quest-1.ics" download="quest-1-save-the-date.ics" class="save-date-button">
+              <div class="save-date-wrapper screen-only">
+                <div class="calendar-menu" data-calendar="quest-1">
+                  <button type="button" class="save-date-button" data-calendar-toggle aria-expanded="false">
                   <svg class="save-date-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10zM8 12h3v3H8v-3z"/>
                   </svg>
                   <span>Add to Calendar</span>
-                </a>
+                  </button>
+                  <div class="calendar-menu__panel" hidden></div>
+                </div>
               </div>
 
               <!-- QR Code Block -->
@@ -291,27 +318,34 @@
                 <div class="details-section">
                   <h3>How to reach the Quest Area</h3>
                   <p class="section-intro">The quest now takes us up winding ghats to the city of Shivamogga. It is about 130km from the Home base. You can use the following options to reach there.</p>
-                  <ul class="travel-directions">
-                    <li>Get a Flight to Shivamogga Airport (RQY), then a Private Cab to the location from there (about 10km)</li>
-                    <li>Catch a train to Shivamogga Railway Station, then a private Cab to the location (about 1.5 km)</li>
-                    <li>Catch a bus to Shivamogga from Bengaluru or Udupi, then a private Cab to the location ( &lt; 5km)</li>
-                    <li>Drive yourself to the location, very scenic routes from Udupi to Shivamogga</li>
+                  <ul class="travel-directions travel-routes">
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-plane.png" alt="Plane"><span class="route__description">Get a Flight to Shivamogga Airport (RQY), then a Private Cab to the location from there (about 10km)</span><span class="route__cost screen-only">10 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-train.png" alt="Train"><span class="route__description">Catch a train to Shivamogga Railway Station, then a private Cab to the location (about 1.5 km)</span><span class="route__cost screen-only">1.5 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-bus.png" alt="Bus"><span class="route__description">Catch a bus to Shivamogga from Bengaluru or Udupi, then a private Cab to the location ( &lt; 5km)</span><span class="route__cost screen-only">Under 5 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-car.png" alt="Car"><span class="route__description">Drive yourself to the location, very scenic routes from Udupi to Shivamogga</span><span class="route__cost screen-only">Scenic route</span></li>
                   </ul>
                 </div>
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <p class="gear-text">Any Casual or Formal clothes.</p>
+                  <div class="inventory screen-only" aria-label="Suggested gear: Casual or Formal clothes">
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128087;</span><span class="inventory__card"><strong>CASUAL ATTIRE</strong><span>Rarity: Common</span><span>+1 Comfort</span></span></span>
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128084;</span><span class="inventory__card"><strong>FORMAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+2 Poise</span></span></span>
+                  </div>
+                  <p class="gear-text gear-text--print">Any Casual or Formal clothes.</p>
                 </div>
               </div>
 
-              <div class="save-date-wrapper">
-                <a href="calendar/quest-2.ics" download="quest-2-save-the-date.ics" class="save-date-button">
+              <div class="save-date-wrapper screen-only">
+                <div class="calendar-menu" data-calendar="quest-2">
+                  <button type="button" class="save-date-button" data-calendar-toggle aria-expanded="false">
                   <svg class="save-date-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10zM8 12h3v3H8v-3z"/>
                   </svg>
                   <span>Add to Calendar</span>
-                </a>
+                  </button>
+                  <div class="calendar-menu__panel" hidden></div>
+                </div>
               </div>
 
               <!-- QR Code Block -->
@@ -349,6 +383,16 @@
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>6 Dec &middot; 7 AM&ndash;2 PM</span>
                 <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 5 of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
               </div>
+              <div class="quest-xp" data-quest-xp="3" aria-label="Quest 3 experience: 0 of 250">
+                <span class="quest-xp__label">XP <output class="quest-xp__value">0</output>/<span class="quest-xp__total">250</span></span>
+                <span class="quest-xp__track" aria-hidden="true"><span class="quest-xp__fill"></span></span>
+              </div>
+              <div class="boss-hp screen-only" id="boss-hp" aria-label="The Marriage Dragon health: 100 percent">
+                <span class="boss-hp__name">THE MARRIAGE DRAGON</span>
+                <span class="boss-hp__track" aria-hidden="true"><span class="boss-hp__fill"></span></span>
+                <output class="boss-hp__value">HP 100 / 100</output>
+                <span class="boss-hp__damage" aria-hidden="true"></span>
+              </div>
             </header>
 
             <div class="divider-swirl"></div>
@@ -362,28 +406,34 @@
               <div class="quest-details-stack">
                 <div class="details-section">
                   <h3>Optional Side Quests</h3>
-                  <ul class="side-quests-list">
-                    <li>Visit the famous Jog Falls</li>
-                    <li>Visit the multiple Elephant sanctuaries or wildlife parks near by</li>
-                    <li>Some of the best treks in Karnataka are close by here in the Western Ghats</li>
-                    <li>Multiple Water Sport Activities around the multiple rivers originating from the Western Ghats</li>
-                    <li>Try some of the delicious local Malnad cuisine</li>
+                  <ul class="side-quests-list objectives" data-quest="3">
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q3-jog-falls" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Visit the famous Jog Falls</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q3-sanctuaries" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Visit the multiple Elephant sanctuaries or wildlife parks near by</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q3-treks" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Some of the best treks in Karnataka are close by here in the Western Ghats</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q3-water-sports" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Multiple Water Sport Activities around the multiple rivers originating from the Western Ghats</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q3-malnad" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Try some of the delicious local Malnad cuisine</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
                   </ul>
                 </div>
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <p class="gear-text">Any Traditional clothes.</p>
+                  <div class="inventory screen-only" aria-label="Suggested gear: Traditional clothes">
+                    <span class="inventory__slot" tabindex="0"><img class="inventory__art" src="assets/pixel-art/traditional-kurta.png" alt=""><span class="inventory__card"><strong>TRADITIONAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+3 Blessing</span></span></span>
+                  </div>
+                  <p class="gear-text gear-text--print">Any Traditional clothes.</p>
                 </div>
               </div>
 
-              <div class="save-date-wrapper">
-                <a href="calendar/quest-3.ics" download="quest-3-save-the-date.ics" class="save-date-button">
+              <div class="save-date-wrapper screen-only">
+                <div class="calendar-menu" data-calendar="quest-3">
+                  <button type="button" class="save-date-button" data-calendar-toggle aria-expanded="false">
                   <svg class="save-date-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10zM8 12h3v3H8v-3z"/>
                   </svg>
                   <span>Add to Calendar</span>
-                </a>
+                  </button>
+                  <div class="calendar-menu__panel" hidden></div>
+                </div>
               </div>
 
               <!-- QR Code Block -->
@@ -419,7 +469,11 @@
               <div class="quest-stats">
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Venkata Laxmi Gardens, Kundapur</span>
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>9 Dec &middot; 7&ndash;11 PM</span>
-                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 1 of 5">&#9733;&#9734;&#9734;&#9734;&#9734;</span>
+                <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 4 of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+              </div>
+              <div class="quest-xp" data-quest-xp="4" aria-label="Quest 4 experience: 0 of 200">
+                <span class="quest-xp__label">XP <output class="quest-xp__value">0</output>/<span class="quest-xp__total">200</span></span>
+                <span class="quest-xp__track" aria-hidden="true"><span class="quest-xp__fill"></span></span>
               </div>
             </header>
 
@@ -433,38 +487,44 @@
               <div class="quest-details-stack">
                 <div class="details-section">
                   <h3>Optional Side Quests</h3>
-                  <ul class="side-quests-list">
-                    <li>Visit any of the multiple beaches around the city all along the coast. (Kodi Beach, Marvanthe Beach)</li>
-                    <li>The whole district is known for holy temples scattered around the district, including the Saptha Kshethras</li>
-                    <li>Some of the beaches have some amazing water sport activities ranging from Snorkeling to Kayaking.</li>
-                    <li>Try some of the delicious local coastal cuisine, like the famous Ghee Roasts at Shetty Lunch Home, or some the beach side restaurants with fresh sea food that you can probably see before you eat. Then there are multiple places to have authentic South Indian Breakfast around the city.</li>
+                  <ul class="side-quests-list objectives" data-quest="4">
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q4-beaches" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Visit any of the multiple beaches around the city all along the coast. (Kodi Beach, Marvanthe Beach)</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q4-temples" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">The whole district is known for holy temples scattered around the district, including the Saptha Kshethras</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q4-water-sports" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Some of the beaches have some amazing water sport activities ranging from Snorkeling to Kayaking.</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
+                    <li><button type="button" class="objective" aria-pressed="false" data-id="q4-cuisine" data-xp="50"><span class="objective__box" aria-hidden="true"></span><span class="objective__text">Try some of the delicious local coastal cuisine, like the famous Ghee Roasts at Shetty Lunch Home, or some the beach side restaurants with fresh sea food that you can probably see before you eat. Then there are multiple places to have authentic South Indian Breakfast around the city.</span><span class="objective__xp" aria-hidden="true">+50 XP</span></button></li>
                   </ul>
                 </div>
 
                 <div class="details-section">
                   <h3>How to reach the Quest Area</h3>
                   <p class="section-intro">Most of the steps to reach the location are very similar to reach my home with the only caveat being the city is far closer and has some of the best roads available in India.</p>
-                  <ul class="travel-directions">
-                    <li>Get a Flight to Mangalore Airport (IXM), then catch a Bus to Kundapur City, after which you can catch an Auto (about 1-3 km) or get a Cab directly from the Airport to the location (about 80 km)</li>
-                    <li>Catch a train to Kundapur Railway Station or Udupi Railway Station, then a private Cab to the location (about 5-35 km)</li>
-                    <li>Catch a bus to Kundapur City then a private Cab/Auto to the location (1 – 5km)</li>
-                    <li>Drive yourself to the location, whether you are travelling from Bengaluru, or Shivamogga or somewhere closer by, these are some of the most scenic and wide roads you’d find in the country.</li>
+                  <ul class="travel-directions travel-routes">
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-plane.png" alt="Plane"><span class="route__description">Get a Flight to Mangalore Airport (IXM), then catch a Bus to Kundapur City, after which you can catch an Auto (about 1-3 km) or get a Cab directly from the Airport to the location (about 80 km)</span><span class="route__cost screen-only">1-80 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-train.png" alt="Train"><span class="route__description">Catch a train to Kundapur Railway Station or Udupi Railway Station, then a private Cab to the location (about 5-35 km)</span><span class="route__cost screen-only">5-35 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-bus.png" alt="Bus"><span class="route__description">Catch a bus to Kundapur City then a private Cab/Auto to the location (1 – 5km)</span><span class="route__cost screen-only">1-5 km</span></li>
+                    <li class="route"><img class="route__icon screen-only" src="assets/pixel-art/route-car.png" alt="Car"><span class="route__description">Drive yourself to the location, whether you are travelling from Bengaluru, or Shivamogga or somewhere closer by, these are some of the most scenic and wide roads you’d find in the country.</span><span class="route__cost screen-only">Scenic route</span></li>
                   </ul>
                 </div>
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <p class="gear-text">Any Celebratory Clothes</p>
+                  <div class="inventory screen-only" aria-label="Suggested gear: Celebratory clothes">
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#10024;</span><span class="inventory__card"><strong>CELEBRATORY ATTIRE</strong><span>Rarity: Rare</span><span>+3 Festivity</span></span></span>
+                  </div>
+                  <p class="gear-text gear-text--print">Any Celebratory Clothes</p>
                 </div>
               </div>
 
-              <div class="save-date-wrapper">
-                <a href="calendar/quest-4.ics" download="quest-4-save-the-date.ics" class="save-date-button">
+              <div class="save-date-wrapper screen-only">
+                <div class="calendar-menu" data-calendar="quest-4">
+                  <button type="button" class="save-date-button" data-calendar-toggle aria-expanded="false">
                   <svg class="save-date-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <path fill="currentColor" d="M7 2h2v2h6V2h2v2h3v18H4V4h3V2zm11 8H6v10h12V10zM8 12h3v3H8v-3z"/>
                   </svg>
                   <span>Add to Calendar</span>
-                </a>
+                  </button>
+                  <div class="calendar-menu__panel" hidden></div>
+                </div>
               </div>
 
               <!-- QR Code Block -->
@@ -509,8 +569,55 @@
       <span class="tracker__dot"></span>
       <span class="tracker__label">4 &middot; The Afterparty</span>
     </button>
+    <button type="button" class="tracker__rsvp" data-action="rsvp" aria-label="Accept the Quest">RSVP</button>
   </nav>
 
+  <div class="rsvp-modal screen-only" id="rsvp-modal" hidden>
+    <div class="rsvp-modal__backdrop" data-action="close-rsvp"></div>
+    <section class="rsvp-modal__sheet" role="dialog" aria-modal="true" aria-labelledby="rsvp-title" tabindex="-1">
+      <button type="button" class="rsvp-modal__close" data-action="close-rsvp" aria-label="Close RSVP">&times;</button>
+      <div class="rsvp-modal__heading">
+        <span class="rsvp-modal__eyebrow">Character Sheet</span>
+        <h2 id="rsvp-title">Accept the Quest</h2>
+      </div>
+
+      <form class="rsvp-form" id="rsvp-form">
+        <label class="rsvp-field">Adventurer Name
+          <input name="guest_name" type="text" minlength="2" maxlength="80" autocomplete="name" required>
+        </label>
+        <label class="rsvp-field">Contact <span>Optional</span>
+          <input name="contact" type="text" maxlength="60" autocomplete="tel">
+        </label>
+        <div class="rsvp-field">Party Size
+          <div class="rsvp-stepper">
+            <button type="button" data-rsvp-step="-1" aria-label="Decrease party size">&minus;</button>
+            <input name="party_size" type="number" min="1" max="20" value="1" inputmode="numeric" aria-label="Party size">
+            <button type="button" data-rsvp-step="1" aria-label="Increase party size">+</button>
+          </div>
+        </div>
+        <fieldset class="rsvp-quests">
+          <legend>Choose Your Quests</legend>
+          <label><input type="checkbox" name="quest_1"> <span>Quest 1</span><small>Naandi · 4 Dec</small></label>
+          <label><input type="checkbox" name="quest_2"> <span>Quest 2</span><small>Sangeet · 5 Dec</small></label>
+          <label><input type="checkbox" name="quest_3"> <span>Quest 3</span><small>Wedding · 6 Dec</small></label>
+          <label><input type="checkbox" name="quest_4"> <span>Quest 4</span><small>Reception · 9 Dec</small></label>
+        </fieldset>
+        <label class="rsvp-field">Message <span>Optional</span>
+          <textarea name="message" maxlength="500" rows="3"></textarea>
+        </label>
+        <p class="rsvp-form__error" id="rsvp-error" role="alert" hidden></p>
+        <button type="submit" class="rsvp-form__submit">Send RSVP</button>
+      </form>
+
+      <div class="rsvp-success" id="rsvp-success" hidden tabindex="-1">
+        <div class="rsvp-success__burst" aria-hidden="true"><span>✦</span><span>✦</span><span>✦</span><span>✦</span><span>✦</span></div>
+        <p>QUEST ACCEPTED</p>
+        <span>Your place in the party is recorded.</span>
+      </div>
+    </section>
+  </div>
+
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

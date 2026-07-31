@@ -169,6 +169,62 @@
     to { opacity: 1; transform: translateX(0); }
   }
 
+  .objective.is-just-completed .objective__box::after {
+    animation: objective-check 440ms var(--ease-out-back) both;
+  }
+
+  .objective.is-just-completed .objective__xp {
+    animation: objective-xp 900ms ease-out both;
+  }
+
+  @keyframes objective-check {
+    0% { opacity: 0; transform: rotate(45deg) scale(0.2); }
+    65% { opacity: 1; transform: rotate(45deg) scale(1.35); }
+    100% { opacity: 1; transform: rotate(45deg) scale(1); }
+  }
+
+  @keyframes objective-xp {
+    0% { opacity: 0; transform: translateY(8px); }
+    18% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-18px); }
+  }
+
+  .rsvp-success:not([hidden]) .rsvp-success__burst span {
+    animation: rsvp-fanfare 900ms var(--ease-out-back) both;
+  }
+
+  .rsvp-success__burst span:nth-child(2) { animation-delay: 70ms; }
+  .rsvp-success__burst span:nth-child(3) { animation-delay: 140ms; }
+  .rsvp-success__burst span:nth-child(4) { animation-delay: 210ms; }
+  .rsvp-success__burst span:nth-child(5) { animation-delay: 280ms; }
+
+  @keyframes rsvp-fanfare {
+    from { opacity: 0; transform: scale(0.3) rotate(-25deg); }
+    55% { opacity: 1; transform: scale(1.35) rotate(8deg); }
+    to { opacity: 0.55; transform: scale(1) rotate(0); }
+  }
+
+  .dialogue:not(.is-complete) .dialogue__continue,
+  .dialogue.is-complete .dialogue__continue {
+    animation: dialogue-continue 900ms steps(1) infinite;
+  }
+
+  @keyframes dialogue-continue {
+    50% { opacity: 0.25; }
+  }
+
+  .boss-hp__fill { transition: transform 120ms linear; }
+
+  .boss-hp.is-damaged .boss-hp__damage {
+    animation: boss-damage 650ms ease-out both;
+  }
+
+  @keyframes boss-damage {
+    0% { opacity: 0; transform: translateY(8px) scale(0.7); }
+    25% { opacity: 1; transform: translateY(0) scale(1.15); }
+    100% { opacity: 0; transform: translateY(-18px) scale(1); }
+  }
+
   /* --- idle motion ----------------------------------------------------- */
   .pixel-art-icon {
     animation: icon-bob 3.4s ease-in-out infinite;
@@ -262,6 +318,17 @@
   .save-date-button:hover::after {
     animation: sweep 720ms ease-out;
   }
+
+  .route::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 34%, rgba(255, 255, 255, 0.58) 50%, transparent 66%);
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+
+  .route:hover::after { animation: sweep 720ms ease-out; }
 
   @keyframes sweep {
     to { transform: translateX(120%); }

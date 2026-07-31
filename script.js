@@ -4,11 +4,15 @@
  */
 
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let playSoundEffect = () => {};
 
 /* ------------------------------------------------------------------ print */
 function initPrintButtons() {
   document.querySelectorAll('[data-action="print"]').forEach((btn) => {
-    btn.addEventListener('click', () => window.print());
+    btn.addEventListener('click', () => {
+      playSoundEffect('blip');
+      window.print();
+    });
   });
 }
 
@@ -25,6 +29,401 @@ function initScrollTo() {
       });
     });
   });
+}
+
+/* -------------------------------------------------------------- calendar */
+const CALENDAR_EVENTS = {
+  'quest-1': { title: 'Quest 1 - Forging Magical Armor', start: '20261204T033000Z', end: '20261204T073000Z', location: 'Sheshanaga, Ullur-74', details: 'Naandi Ceremony and final feast.' },
+  'quest-2': { title: 'Quest 2 - The Dance Begins', start: '20261205T133000Z', end: '20261205T163000Z', location: 'Shree Maatha Mangalya Mandira, Shivamogga', details: 'Sangeet Ceremony with performances and a meal.' },
+  'quest-3': { title: 'Quest 3 - The Ceremony', start: '20261206T013000Z', end: '20261206T083000Z', location: 'Shree Matha Mangalya Mandira', details: 'Wedding ceremony, breakfast, and victory feast.' },
+  'quest-4': { title: 'Quest 4 - The Afterparty', start: '20261209T133000Z', end: '20261209T173000Z', location: 'Venkata Laxmi Gardens', details: 'Reception Ceremony and final grand feast.' },
+};
+
+function initCalendarMenus() {
+  const encode = encodeURIComponent;
+  const toIso = (value) => `${value.slice(0, 4)}-${value.slice(4, 6)}-${value.slice(6, 8)}T${value.slice(9, 11)}:${value.slice(11, 13)}:${value.slice(13, 15)}Z`;
+  const usesPhoneCalendarFlow = () => window.matchMedia('(max-width: 600px), (pointer: coarse)').matches;
+
+  document.querySelectorAll('.calendar-menu[data-calendar]').forEach((menu) => {
+    const event = CALENDAR_EVENTS[menu.dataset.calendar];
+    const toggle = menu.querySelector('[data-calendar-toggle]');
+    const panel = menu.querySelector('.calendar-menu__panel');
+    if (!event || !toggle || !panel) return;
+
+    const ics = `calendar/${menu.dataset.calendar}.ics`;
+    const google = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encode(event.title)}&dates=${event.start}/${event.end}&location=${encode(event.location)}&details=${encode(event.details)}`;
+    const outlook = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encode(event.title)}&startdt=${encode(toIso(event.start))}&enddt=${encode(toIso(event.end))}&location=${encode(event.location)}&body=${encode(event.details)}`;
+    const yahoo = `https://calendar.yahoo.com/?v=60&title=${encode(event.title)}&st=${event.start}&et=${event.end}&in_loc=${encode(event.location)}&desc=${encode(event.details)}`;
+    panel.innerHTML = `<a href="${google}" target="_blank" rel="noopener noreferrer">Google Calendar</a><a href="${ics}" download>Apple Calendar (.ics)</a><a href="${outlook}" target="_blank" rel="noopener noreferrer">Outlook</a><a href="${yahoo}" target="_blank" rel="noopener noreferrer">Yahoo Calendar</a>`;
+
+    toggle.addEventListener('click', () => {
+      playSoundEffect('calendar');
+      // Mobile calendar apps handle .ics files natively. Opening it directly
+      // avoids a small provider menu obscuring the page's lower inventory.
+      if (usesPhoneCalendarFlow()) {
+        window.location.assign(ics);
+        return;
+      }
+      const open = panel.hidden;
+      document.querySelectorAll('.calendar-menu__panel').forEach((other) => { other.hidden = true; });
+      document.querySelectorAll('[data-calendar-toggle]').forEach((other) => other.setAttribute('aria-expanded', 'false'));
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('.calendar-menu')) return;
+    document.querySelectorAll('.calendar-menu__panel').forEach((panel) => { panel.hidden = true; });
+    document.querySelectorAll('[data-calendar-toggle]').forEach((toggle) => toggle.setAttribute('aria-expanded', 'false'));
+  });
+}
+
+/* ------------------------------------------------------------------ share */
+function initShare() {
+  const button = document.querySelector('[data-action="share"]');
+  const status = document.getElementById('share-status');
+  if (!button || !status) return;
+
+  const label = button.querySelector('[data-share-label]');
+  let resetTimer;
+  const showResult = (visible, announced) => {
+    status.textContent = announced;
+    if (!label) return;
+    clearTimeout(resetTimer);
+    label.textContent = visible;
+    resetTimer = setTimeout(() => { label.textContent = 'Share'; }, 2200);
+  };
+
+  const shareData = {
+    title: 'A New Beginning - Quest Log',
+    text: 'Join Namratha and Shreyas on their wedding quest.',
+    url: window.location.href,
+  };
+
+  button.addEventListener('click', async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        playSoundEffect('share');
+        showResult('Shared', 'Quest shared.');
+        return;
+      }
+      let copied = false;
+      if (navigator.clipboard?.writeText) {
+        try {
+          await navigator.clipboard.writeText(shareData.url);
+          copied = true;
+        } catch {
+          copied = false;
+        }
+      }
+      if (!copied) {
+        const input = document.createElement('textarea');
+        input.value = shareData.url;
+        document.body.append(input);
+        input.select();
+        copied = document.execCommand('copy');
+        input.remove();
+      }
+      if (!copied) throw new Error('Copy failed');
+      playSoundEffect('share');
+      showResult('Link Copied', 'Quest link copied to the clipboard.');
+    } catch {
+      showResult('Try Again', 'Unable to share the quest right now.');
+    }
+  });
+}
+
+/* ------------------------------------------------------------------ sound */
+const SOUND_STORAGE_KEY = 'questlog.sound';
+
+function initSound() {
+  const toggle = document.querySelector('[data-action="sound"]');
+  const label = toggle?.querySelector('[data-sound-label]');
+  if (!toggle || !label) return;
+
+  let enabled = false;
+  let context;
+  try { enabled = localStorage.getItem(SOUND_STORAGE_KEY) === 'on'; } catch { /* Sound defaults to off. */ }
+
+  const updateToggle = () => {
+    toggle.setAttribute('aria-pressed', String(enabled));
+    label.textContent = enabled ? 'Sound On' : 'Sound Off';
+  };
+
+  const tone = (frequency, start, duration, { type = 'square', gain = 0.035, endFrequency = frequency } = {}) => {
+    const oscillator = context.createOscillator();
+    const volume = context.createGain();
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(frequency, start);
+    oscillator.frequency.exponentialRampToValueAtTime(Math.max(1, endFrequency), start + duration);
+    volume.gain.setValueAtTime(gain, start);
+    volume.gain.exponentialRampToValueAtTime(0.001, start + duration);
+    oscillator.connect(volume).connect(context.destination);
+    oscillator.start(start);
+    oscillator.stop(start + duration + 0.01);
+  };
+
+  playSoundEffect = (kind) => {
+    if (!enabled || !window.AudioContext) return;
+    context ||= new AudioContext();
+    const now = context.currentTime;
+    const playNotes = (notes, step = 0.07, options = {}) => notes.forEach((note, index) => tone(note, now + index * step, options.duration || 0.075, options));
+
+    if (kind === 'turn') tone(280, now, 0.16, { gain: 0.035, endFrequency: 130 });
+    else if (kind === 'objective') playNotes([523, 659, 784], 0.055, { gain: 0.035 });
+    else if (kind === 'objective-undo') playNotes([392, 294], 0.075, { gain: 0.028 });
+    else if (kind === 'level-up') playNotes([523, 659, 784, 1047], 0.07, { gain: 0.04, duration: 0.13 });
+    else if (kind === 'calendar') playNotes([659, 880], 0.075, { gain: 0.032 });
+    else if (kind === 'share') playNotes([784, 1047], 0.06, { gain: 0.032, type: 'triangle' });
+    else if (kind === 'menu-open') playNotes([330, 440], 0.06, { gain: 0.025 });
+    else if (kind === 'menu-close') playNotes([440, 330], 0.06, { gain: 0.022 });
+    else if (kind === 'step-up') tone(600, now, 0.05, { gain: 0.025, endFrequency: 700 });
+    else if (kind === 'step-down') tone(420, now, 0.05, { gain: 0.025, endFrequency: 340 });
+    else if (kind === 'toggle') tone(560, now, 0.06, { gain: 0.025, type: 'triangle' });
+    else if (kind === 'fanfare') playNotes([523, 659, 784, 1047], 0.1, { gain: 0.045, duration: 0.18 });
+    else if (kind === 'warp') playNotes([392, 523, 784], 0.045, { gain: 0.025, type: 'triangle' });
+    else if (kind === 'boss-hit') tone(150, now, 0.12, { gain: 0.05, type: 'sawtooth', endFrequency: 80 });
+    else if (kind === 'boss-defeat') {
+      tone(110, now, 0.22, { gain: 0.055, type: 'sawtooth', endFrequency: 60 });
+      playNotes([392, 523, 784], 0.09, { gain: 0.04, duration: 0.15 });
+    } else tone(520, now, 0.09, { gain: 0.03, endFrequency: 730 });
+  };
+
+  toggle.addEventListener('click', () => {
+    enabled = !enabled;
+    try { localStorage.setItem(SOUND_STORAGE_KEY, enabled ? 'on' : 'off'); } catch { /* Preference remains for this visit. */ }
+    updateToggle();
+    playSoundEffect('blip');
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target.closest('[data-action], [data-calendar-toggle], [data-rsvp-step], .objective, .journey__pin, .tracker__node, .rsvp-quests input')) return;
+    if (event.target.closest('button, a')) playSoundEffect('blip');
+  });
+
+  updateToggle();
+}
+
+/* ------------------------------------------------------------------- RSVP */
+const RSVP_STORAGE_KEY = 'questlog.rsvp';
+
+function initRsvp() {
+  const modal = document.getElementById('rsvp-modal');
+  const form = document.getElementById('rsvp-form');
+  const success = document.getElementById('rsvp-success');
+  const error = document.getElementById('rsvp-error');
+  const sheet = modal?.querySelector('.rsvp-modal__sheet');
+  if (!modal || !form || !success || !error || !sheet) return;
+
+  const openers = [...document.querySelectorAll('[data-action="rsvp"]')];
+  const closers = [...modal.querySelectorAll('[data-action="close-rsvp"]')];
+  let previousFocus = null;
+
+  const isAccepted = () => {
+    try { return localStorage.getItem(RSVP_STORAGE_KEY) === 'accepted'; } catch { return false; }
+  };
+
+  const showAccepted = () => {
+    form.hidden = true;
+    success.hidden = false;
+  };
+
+  const close = () => {
+    playSoundEffect('menu-close');
+    modal.hidden = true;
+    document.body.style.removeProperty('overflow');
+    previousFocus?.focus();
+  };
+
+  const open = (opener) => {
+    playSoundEffect('menu-open');
+    previousFocus = opener;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    if (isAccepted()) showAccepted();
+    else {
+      form.hidden = false;
+      success.hidden = true;
+    }
+    (success.hidden ? form.querySelector('[name="guest_name"]') : success).focus();
+  };
+
+  openers.forEach((opener) => opener.addEventListener('click', () => open(opener)));
+  closers.forEach((closer) => closer.addEventListener('click', close));
+
+  modal.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close();
+      return;
+    }
+    if (event.key !== 'Tab') return;
+    const focusable = [...sheet.querySelectorAll('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex="0"]')]
+      .filter((el) => !el.closest('[hidden]'));
+    const first = focusable[0];
+    const last = focusable.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  form.querySelectorAll('[data-rsvp-step]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const input = form.elements.party_size;
+      const next = Math.min(20, Math.max(1, Number(input.value || 1) + Number(button.dataset.rsvpStep)));
+      input.value = next;
+      playSoundEffect(Number(button.dataset.rsvpStep) > 0 ? 'step-up' : 'step-down');
+    });
+  });
+
+  form.querySelectorAll('.rsvp-quests input').forEach((input) => {
+    input.addEventListener('change', () => playSoundEffect('toggle'));
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    error.hidden = true;
+    const data = new FormData(form);
+    const quests = ['quest_1', 'quest_2', 'quest_3', 'quest_4'];
+    if (!quests.some((quest) => data.get(quest))) {
+      error.textContent = 'Choose at least one quest to attend.';
+      error.hidden = false;
+      return;
+    }
+
+    const config = window.QUESTLOG_CONFIG;
+    if (!config?.SUPABASE_URL || !config?.SUPABASE_ANON_KEY) {
+      error.textContent = 'RSVP is not configured yet. Please try again later.';
+      error.hidden = false;
+      return;
+    }
+
+    const submit = form.querySelector('[type="submit"]');
+    submit.disabled = true;
+    submit.textContent = 'Sending...';
+    const payload = {
+      guest_name: data.get('guest_name').trim(),
+      contact: data.get('contact').trim() || null,
+      party_size: Number(data.get('party_size')),
+      quest_1: data.has('quest_1'),
+      quest_2: data.has('quest_2'),
+      quest_3: data.has('quest_3'),
+      quest_4: data.has('quest_4'),
+      message: data.get('message').trim() || null,
+    };
+
+    try {
+      const response = await fetch(`${config.SUPABASE_URL}/rest/v1/rsvps`, {
+        method: 'POST',
+        headers: {
+          apikey: config.SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${config.SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal',
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) throw new Error('Submission failed');
+      try { localStorage.setItem(RSVP_STORAGE_KEY, 'accepted'); } catch { /* State remains for this visit. */ }
+      showAccepted();
+      playSoundEffect('fanfare');
+      success.focus();
+    } catch {
+      error.textContent = 'The quest could not be accepted. Please check your connection and try again.';
+      error.hidden = false;
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Send RSVP';
+    }
+  });
+}
+
+/* ------------------------------------------------------------- objectives */
+const OBJECTIVES_STORAGE_KEY = 'questlog.objectives';
+
+function readCompletedObjectives() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(OBJECTIVES_STORAGE_KEY));
+    return new Set(Array.isArray(stored) ? stored : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function saveCompletedObjectives(completed) {
+  try {
+    localStorage.setItem(OBJECTIVES_STORAGE_KEY, JSON.stringify([...completed]));
+  } catch {
+    // Private browsing can disable storage; objectives still work for this visit.
+  }
+}
+
+function initObjectives() {
+  const objectives = [...document.querySelectorAll('.objective[data-id]')];
+  if (!objectives.length) return;
+
+  const completed = readCompletedObjectives();
+
+  const updateQuestXp = (quest) => {
+    const root = document.querySelector(`[data-quest-xp="${quest}"]`);
+    const list = document.querySelector(`.objectives[data-quest="${quest}"]`);
+    if (!root || !list) return;
+
+    const questObjectives = [...list.querySelectorAll('.objective')];
+    const total = questObjectives.reduce((sum, objective) => sum + Number(objective.dataset.xp || 0), 0);
+    const earned = questObjectives.reduce(
+      (sum, objective) => sum + (completed.has(objective.dataset.id) ? Number(objective.dataset.xp || 0) : 0),
+      0
+    );
+    const value = root.querySelector('.quest-xp__value');
+    const totalEl = root.querySelector('.quest-xp__total');
+    const fill = root.querySelector('.quest-xp__fill');
+    if (value) value.value = value.textContent = earned;
+    if (totalEl) totalEl.textContent = total;
+    if (fill) fill.style.transform = `scaleX(${total ? earned / total : 0})`;
+    root.setAttribute('aria-label', `Quest ${quest} experience: ${earned} of ${total}`);
+  };
+
+  const renderObjective = (objective, shouldAnimate = false) => {
+    const isComplete = completed.has(objective.dataset.id);
+    objective.classList.toggle('is-complete', isComplete);
+    objective.setAttribute('aria-pressed', String(isComplete));
+    if (shouldAnimate && isComplete && !REDUCED_MOTION) {
+      objective.classList.remove('is-just-completed');
+      void objective.offsetWidth;
+      objective.classList.add('is-just-completed');
+      objective.addEventListener('animationend', () => objective.classList.remove('is-just-completed'), { once: true });
+    }
+  };
+
+  objectives.forEach((objective) => {
+    renderObjective(objective);
+    objective.addEventListener('click', () => {
+      const id = objective.dataset.id;
+      const isComplete = completed.has(id);
+      if (isComplete) completed.delete(id);
+      else completed.add(id);
+      renderObjective(objective, !isComplete);
+      updateQuestXp(objective.closest('.objectives').dataset.quest);
+      saveCompletedObjectives(completed);
+      if (isComplete) {
+        playSoundEffect('objective-undo');
+      } else {
+        const list = objective.closest('.objectives');
+        const complete = [...list.querySelectorAll('.objective')].every((item) => completed.has(item.dataset.id));
+        playSoundEffect(complete ? 'level-up' : 'objective');
+      }
+    });
+  });
+
+  document.querySelectorAll('.objectives[data-quest]').forEach((list) => updateQuestXp(list.dataset.quest));
 }
 
 /* -------------------------------------------------------------- countdown */
@@ -92,6 +491,57 @@ function initTypedSubtitle() {
     }
   };
   setTimeout(type, 900);
+}
+
+/* ------------------------------------------------------------- dialogue */
+function initDialogue() {
+  const dialogue = document.getElementById('intro-dialogue');
+  const textEl = dialogue?.querySelector('.dialogue__text');
+  if (!dialogue || !textEl) return;
+
+  const text = textEl.dataset.text || textEl.textContent.trim();
+  let started = false;
+  let complete = false;
+  let timer;
+
+  const finish = () => {
+    clearTimeout(timer);
+    complete = true;
+    textEl.textContent = text;
+    dialogue.classList.add('is-complete');
+  };
+
+  const start = () => {
+    if (started) return;
+    started = true;
+    if (REDUCED_MOTION) {
+      finish();
+      return;
+    }
+
+    textEl.textContent = '';
+    let index = 0;
+    const type = () => {
+      textEl.textContent = text.slice(0, (index += 1));
+      if (index < text.length) timer = setTimeout(type, '.?!'.includes(text[index - 1]) ? 180 : 16);
+      else finish();
+    };
+    type();
+  };
+
+  dialogue.addEventListener('click', () => {
+    if (!complete) finish();
+  });
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return;
+      start();
+      observer.disconnect();
+    },
+    { threshold: 0, rootMargin: '0px 0px -80px 0px' }
+  );
+  observer.observe(dialogue);
 }
 
 /* --------------------------------------------------------------- parallax */
@@ -413,6 +863,7 @@ function initScrollReveal() {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         entry.target.classList.add('is-visible');
+        playSoundEffect('turn');
         observer.unobserve(entry.target);
       });
     },
@@ -454,6 +905,49 @@ function initScrollProgress() {
   update();
 }
 
+/* --------------------------------------------------------------- boss HP */
+function initBossHp() {
+  const page = document.getElementById('quest-3-page');
+  const root = document.getElementById('boss-hp');
+  if (!page || !root || REDUCED_MOTION) return;
+
+  const fill = root.querySelector('.boss-hp__fill');
+  const value = root.querySelector('.boss-hp__value');
+  const damage = root.querySelector('.boss-hp__damage');
+  const milestones = [75, 50, 25, 0];
+  let triggered = new Set();
+  let ticking = false;
+
+  const update = () => {
+    ticking = false;
+    const box = page.getBoundingClientRect();
+    const travelled = (window.innerHeight - box.top) / (window.innerHeight + box.height);
+    const progress = Math.min(1, Math.max(0, travelled));
+    const hp = Math.round((1 - progress) * 100);
+    fill.style.transform = `scaleX(${hp / 100})`;
+    value.textContent = `HP ${hp} / 100`;
+    root.setAttribute('aria-label', `The Marriage Dragon health: ${hp} percent`);
+
+    milestones.forEach((milestone) => {
+      if (hp > milestone || triggered.has(milestone)) return;
+      triggered.add(milestone);
+      damage.textContent = milestone === 0 ? 'DEFEATED!' : `-${100 - milestone} DMG`;
+      root.classList.remove('is-damaged');
+      void root.offsetWidth;
+      root.classList.add('is-damaged');
+      playSoundEffect(milestone === 0 ? 'boss-defeat' : 'boss-hit');
+    });
+  };
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
+
 /* ------------------------------------------------------------ journey map */
 
 function scrollToId(id) {
@@ -485,7 +979,10 @@ function initJourneyMap() {
   });
 
   section.querySelectorAll('.journey__pin').forEach((pin) => {
-    const go = () => scrollToId(pin.dataset.target);
+    const go = () => {
+      playSoundEffect('warp');
+      scrollToId(pin.dataset.target);
+    };
     pin.addEventListener('click', go);
     pin.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') {
@@ -551,7 +1048,10 @@ function initTracker() {
     .filter((entry) => entry.el);
 
   nodes.forEach((node) => {
-    node.addEventListener('click', () => scrollToId(node.dataset.target));
+    node.addEventListener('click', () => {
+      playSoundEffect('warp');
+      scrollToId(node.dataset.target);
+    });
   });
 
   if (hero) {
@@ -598,14 +1098,21 @@ function initTracker() {
 document.addEventListener('DOMContentLoaded', () => {
   initPrintButtons();
   initScrollTo();
+  initCalendarMenus();
+  initShare();
+  initSound();
+  initRsvp();
+  initObjectives();
   initCountdown();
   initTypedSubtitle();
+  initDialogue();
   initParallax();
   initParticles();
   initQuestAmbience();
   initControlPanelReveal();
   initScrollReveal();
   initScrollProgress();
+  initBossHp();
   initJourneyMap();
   initTracker();
 });
