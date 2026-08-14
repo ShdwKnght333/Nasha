@@ -62,7 +62,7 @@
 
       <div class="hero__cta">
         <button type="button" class="btn-quest" data-action="rsvp">Accept the Quest</button>
-        <a class="btn-quest btn-quest--ghost" href="calendar/all-quests.ics" download="all-quests.ics">Add All Quests</a>
+        <a class="btn-quest btn-quest--ghost" href="calendar/all-quests.ics" download="all-quests.ics" data-action="add-all-quests">Add All Quests</a>
         <button type="button" class="btn-quest btn-quest--ghost" data-action="share"><span data-share-label>Share</span></button>
         <button type="button" class="btn-quest btn-quest--ghost" data-action="sound" aria-pressed="false"><span data-sound-label>Sound Off</span></button>
         <button type="button" class="btn-quest btn-quest--ghost" data-action="print">
@@ -249,12 +249,11 @@
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <div class="inventory screen-only" aria-label="Suggested gear: Casual, Formal, or Traditional clothes">
+                  <div class="inventory screen-only" aria-label="Suggested gear: Casual or Traditional attire">
                     <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128087;</span><span class="inventory__card"><strong>CASUAL ATTIRE</strong><span>Rarity: Common</span><span>+1 Comfort</span></span></span>
-                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128084;</span><span class="inventory__card"><strong>FORMAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+2 Poise</span></span></span>
                     <span class="inventory__slot" tabindex="0"><img class="inventory__art" src="assets/pixel-art/traditional-kurta.png" alt=""><span class="inventory__card"><strong>TRADITIONAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+3 Blessing</span></span></span>
                   </div>
-                  <p class="gear-text gear-text--print">Any Casual, Formal or Traditional Clothes</p>
+                  <p class="gear-text gear-text--print">Casual or Traditional Attire</p>
                 </div>
               </div>
 
@@ -328,11 +327,11 @@
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <div class="inventory screen-only" aria-label="Suggested gear: Casual or Formal clothes">
+                  <div class="inventory screen-only" aria-label="Suggested gear: Party or Casual attire">
+                    <span class="inventory__slot" tabindex="0"><img class="inventory__art" src="assets/pixel-art/party-attire.png" alt=""><span class="inventory__card"><strong>PARTY ATTIRE</strong><span>Rarity: Rare</span><span>+3 Festivity</span></span></span>
                     <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128087;</span><span class="inventory__card"><strong>CASUAL ATTIRE</strong><span>Rarity: Common</span><span>+1 Comfort</span></span></span>
-                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128084;</span><span class="inventory__card"><strong>FORMAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+2 Poise</span></span></span>
                   </div>
-                  <p class="gear-text gear-text--print">Any Casual or Formal clothes.</p>
+                  <p class="gear-text gear-text--print">Party or Casual Attire</p>
                 </div>
               </div>
 
@@ -380,7 +379,7 @@
               <h2 class="quest-title">The Ceremony</h2>
               <div class="quest-stats">
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Shree Matha Mangalya Mandira</span>
-                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>6 Dec &middot; 7 AM&ndash;2 PM</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>6 Dec &middot; 9:30 AM&ndash;2 PM</span>
                 <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 5 of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
               </div>
               <div class="quest-xp" data-quest-xp="3" aria-label="Quest 3 experience: 0 of 250">
@@ -400,7 +399,7 @@
             <div class="quest-body">
               <p class="critical-announcement">This is the moment Namratha and I need your support and presence the most. This is the only Quest which needs to be absolutely completed from your end.</p>
               <p>On the <strong>December of 6th, Sunday</strong>, Namratha and I will be slaying the dragon called Marriage, the Wedding Beast at Shree Matha Mangalya Mandira.</p>
-              <p>Before the showdown we will have Breakfast at <strong>7AM</strong> followed by the ceremonies reaching the zenith at <strong>11 AM</strong>. Then we will have the victory feast at <strong>12:30 PM</strong></p>
+              <p>Before the showdown we will have Breakfast at <strong>9:30 AM</strong> followed by the ceremonies reaching the zenith at <strong>11 AM</strong>. Then we will have the victory feast at <strong>12:30 PM</strong></p>
               <p>Please do stay back until after <strong>2PM</strong>, so that I can meet and reminisce with my loyal adventurers for showing up.</p>
 
               <div class="quest-details-stack">
@@ -468,7 +467,7 @@
               <h2 class="quest-title">The Afterparty</h2>
               <div class="quest-stats">
                 <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>Venkata Laxmi Gardens, Kundapur</span>
-                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>9 Dec &middot; 7&ndash;11 PM</span>
+                <span class="quest-stat"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 10.6V6h-2v7.4l5.5 3.3 1-1.7-4.5-2.4z"/></svg>9 Dec &middot; 6:30&ndash;10:30 PM</span>
                 <span class="quest-stat quest-stat--difficulty" aria-label="Difficulty 4 of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
               </div>
               <div class="quest-xp" data-quest-xp="4" aria-label="Quest 4 experience: 0 of 200">
@@ -481,7 +480,7 @@
 
             <div class="quest-body">
               <p>And now we have reached the final step of this adventure. In my hometown, Kundapur City, the city I grew up in, we will have the final party of this grand Quest of union.</p>
-              <p>After a slight respite to get back our strengths back to the optimal level, on the <strong>9th of December</strong>, we will have the Reception Ceremony at Venkata Laxmi Gardens. The Gardens should be open around <strong>7 PM</strong> till <strong>11 PM</strong> in the night. There will also be one final grand feast at the venue.</p>
+              <p>After a slight respite to get back our strengths back to the optimal level, on the <strong>9th of December</strong>, we will have the Reception Ceremony at Venkata Laxmi Gardens. The Gardens should be open around <strong>6:30 PM</strong> till <strong>10:30 PM</strong> in the night. There will also be one final grand feast at the venue.</p>
               <p class="concluding-question">At this final celebration, there will be lights, cameras, music and food. Only question that remains, will you?</p>
 
               <div class="quest-details-stack">
@@ -508,10 +507,11 @@
 
                 <div class="details-section gear-section">
                   <h3>Suggested Gear for the Quest</h3>
-                  <div class="inventory screen-only" aria-label="Suggested gear: Celebratory clothes">
-                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#10024;</span><span class="inventory__card"><strong>CELEBRATORY ATTIRE</strong><span>Rarity: Rare</span><span>+3 Festivity</span></span></span>
+                  <div class="inventory screen-only" aria-label="Suggested gear: Party or Formal attire">
+                    <span class="inventory__slot" tabindex="0"><img class="inventory__art" src="assets/pixel-art/party-attire.png" alt=""><span class="inventory__card"><strong>PARTY ATTIRE</strong><span>Rarity: Rare</span><span>+3 Festivity</span></span></span>
+                    <span class="inventory__slot" tabindex="0"><span class="inventory__emoji" aria-hidden="true">&#128084;</span><span class="inventory__card"><strong>FORMAL ATTIRE</strong><span>Rarity: Uncommon</span><span>+2 Poise</span></span></span>
                   </div>
-                  <p class="gear-text gear-text--print">Any Celebratory Clothes</p>
+                  <p class="gear-text gear-text--print">Party or Formal Attire</p>
                 </div>
               </div>
 

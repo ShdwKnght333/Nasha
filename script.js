@@ -35,9 +35,23 @@ function initScrollTo() {
 const CALENDAR_EVENTS = {
   'quest-1': { title: 'Quest 1 - Forging Magical Armor', start: '20261204T033000Z', end: '20261204T073000Z', location: 'Sheshanaga, Ullur-74', details: 'Naandi Ceremony and final feast.' },
   'quest-2': { title: 'Quest 2 - The Dance Begins', start: '20261205T133000Z', end: '20261205T163000Z', location: 'Shree Maatha Mangalya Mandira, Shivamogga', details: 'Sangeet Ceremony with performances and a meal.' },
-  'quest-3': { title: 'Quest 3 - The Ceremony', start: '20261206T013000Z', end: '20261206T083000Z', location: 'Shree Matha Mangalya Mandira', details: 'Wedding ceremony, breakfast, and victory feast.' },
-  'quest-4': { title: 'Quest 4 - The Afterparty', start: '20261209T133000Z', end: '20261209T173000Z', location: 'Venkata Laxmi Gardens', details: 'Reception Ceremony and final grand feast.' },
+  'quest-3': { title: 'Quest 3 - The Ceremony', start: '20261206T040000Z', end: '20261206T083000Z', location: 'Shree Matha Mangalya Mandira', details: 'Wedding ceremony, breakfast, and victory feast.' },
+  'quest-4': { title: 'Quest 4 - The Afterparty', start: '20261209T130000Z', end: '20261209T170000Z', location: 'Venkata Laxmi Gardens', details: 'Reception Ceremony and final grand feast.' },
 };
+
+function showCalendarTimingNotice() {
+  window.alert('Please note that event timings may change as we get closer to the dates. Thank you for your understanding.');
+}
+
+function initAllQuestsCalendar() {
+  const link = document.querySelector('[data-action="add-all-quests"]');
+  if (!link) return;
+
+  link.addEventListener('click', () => {
+    playSoundEffect('calendar');
+    showCalendarTimingNotice();
+  });
+}
 
 function initCalendarMenus() {
   const encode = encodeURIComponent;
@@ -55,12 +69,16 @@ function initCalendarMenus() {
     const outlook = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encode(event.title)}&startdt=${encode(toIso(event.start))}&enddt=${encode(toIso(event.end))}&location=${encode(event.location)}&body=${encode(event.details)}`;
     const yahoo = `https://calendar.yahoo.com/?v=60&title=${encode(event.title)}&st=${event.start}&et=${event.end}&in_loc=${encode(event.location)}&desc=${encode(event.details)}`;
     panel.innerHTML = `<a href="${google}" target="_blank" rel="noopener noreferrer">Google Calendar</a><a href="${ics}" download>Apple Calendar (.ics)</a><a href="${outlook}" target="_blank" rel="noopener noreferrer">Outlook</a><a href="${yahoo}" target="_blank" rel="noopener noreferrer">Yahoo Calendar</a>`;
+    panel.addEventListener('click', (clickEvent) => {
+      if (clickEvent.target.closest('a')) showCalendarTimingNotice();
+    });
 
     toggle.addEventListener('click', () => {
       playSoundEffect('calendar');
       // Mobile calendar apps handle .ics files natively. Opening it directly
       // avoids a small provider menu obscuring the page's lower inventory.
       if (usesPhoneCalendarFlow()) {
+        showCalendarTimingNotice();
         window.location.assign(ics);
         return;
       }
@@ -1098,6 +1116,7 @@ function initTracker() {
 document.addEventListener('DOMContentLoaded', () => {
   initPrintButtons();
   initScrollTo();
+  initAllQuestsCalendar();
   initCalendarMenus();
   initShare();
   initSound();
