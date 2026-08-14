@@ -6,11 +6,11 @@ METHOD:PUBLISH
 BEGIN:VEVENT
 UID:quest-4-20261209@rpginvitation.local
 DTSTAMP:20260719T000000Z
-DTSTART;TZID=Asia/Kolkata:20261209T190000
-DTEND;TZID=Asia/Kolkata:20261209T230000
+DTSTART;TZID=Asia/Kolkata:20261209T183000
+DTEND;TZID=Asia/Kolkata:20261209T223000
 SUMMARY:Quest 4 - The Afterparty
 LOCATION:Venkata Laxmi Gardens
-DESCRIPTION:Reception Ceremony from 7 PM to 11 PM with the final grand feast at the venue. Map: https://maps.app.goo.gl/FwiDCcgmuGdbqdrs6
+DESCRIPTION:Reception Ceremony from 6:30 PM to 10:30 PM with the final grand feast at the venue. Map: https://maps.app.goo.gl/FwiDCcgmuGdbqdrs6
 STATUS:CONFIRMED
 TRANSP:OPAQUE
 END:VEVENT
