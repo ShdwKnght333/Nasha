@@ -33,7 +33,7 @@ function initScrollTo() {
 
 /* -------------------------------------------------------------- calendar */
 const CALENDAR_EVENTS = {
-  'quest-1': { title: 'Naandi', start: '20261204T033000Z', end: '20261204T073000Z', location: 'Sheshanaga, Ullur-74', details: 'Naandi Ceremony and final feast.' },
+  'quest-1': { title: 'Samvarthane', start: '20261204T033000Z', end: '20261204T073000Z', location: 'Sheshanaga, Ullur-74', details: 'Samvarthane Ceremony and final feast.' },
   'quest-2': { title: 'Sangeeth', start: '20261205T133000Z', end: '20261205T163000Z', location: 'Shree Maatha Mangalya Mandira, Shivamogga', details: 'Sangeet Ceremony with performances and a meal.' },
   'quest-3': { title: 'Wedding', start: '20261206T040000Z', end: '20261206T083000Z', location: 'Shree Matha Mangalya Mandira', details: 'Wedding ceremony, breakfast, and victory feast.' },
   'quest-4': { title: 'Reception', start: '20261209T130000Z', end: '20261209T170000Z', location: 'Venkata Laxmi Gardens', details: 'Reception Ceremony and final grand feast.' },
