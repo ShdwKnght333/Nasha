@@ -9,6 +9,18 @@
     margin: 0;
   }
 
+  .wedding-update {
+    min-height: 0;
+    padding: 15mm;
+    background: none;
+  }
+
+  .wedding-update__parchment {
+    max-width: none;
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
   /* Strip all on-screen game chrome */
   .screen-only {
     display: none !important;

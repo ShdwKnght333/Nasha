@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A New Beginning - Quest Log</title>
-  <meta name="description" content="Namratha &amp; Shreyas invite you on a quest across Karnataka from the 4th to 9th December.">
+  <title>A Pause in Our Adventure - Wedding Update</title>
+  <meta name="description" content="Namratha &amp; Shreyas's wedding has been postponed due to unforeseen circumstances. A new date has not yet been decided. Thank you for your understanding.">
   <meta name="theme-color" content="#1a0f02">
   <meta name="color-scheme" content="only light">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="A New Beginning - Quest Log">
-  <meta property="og:description" content="Namratha &amp; Shreyas invite you on a quest across Karnataka from the 4th to 9th December.">
-  <meta property="og:image" content="assets/og-quest-log.png">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:title" content="A Pause in Our Adventure - Wedding Update">
+  <meta property="og:description" content="Our wedding has been postponed due to unforeseen circumstances. A new date has not yet been decided. Thank you for your patience, kindness, and understanding.">
+  <meta name="twitter:card" content="summary">
 
   <link rel="icon" href="assets/pixel-art/crossed-swords.png" type="image/png">
 
@@ -26,6 +25,28 @@
 </head>
 <body>
 
+  <main class="wedding-update" aria-labelledby="wedding-update-title">
+    <article class="wedding-update__parchment">
+      <div class="wedding-update__frame">
+        <img class="wedding-update__sigil" src="assets/pixel-art/heart.png" alt="" width="48" height="48">
+        <p class="wedding-update__eyebrow">Quest Log Update</p>
+        <h1 id="wedding-update-title">A Pause in Our Adventure</h1>
+        <p class="wedding-update__status">Wedding postponed &middot; New date to be announced</p>
+        <div class="wedding-update__message">
+          <p>Dear fellow Adventurers,</p>
+          <p>Every journey has turns we cannot foresee. Due to unforeseen circumstances, our wedding has been postponed. A new date has not yet been decided.</p>
+          <p>I&rsquo;m truly sorry for the inconvenience this change may cause, especially for those who have already made plans to join us.</p>
+          <p>Thank you for your patience, kindness, and understanding while the next chapter finds its time.</p>
+        </div>
+        <p class="wedding-update__closing">For now, the quest rests.<br>When a new date is confirmed, this quest log will be updated.</p>
+        <p class="wedding-update__signature">Namratha &amp; Shreyas</p>
+      </div>
+    </article>
+  </main>
+
+  <!-- Preserve the invitation for a future date, without exposing its old schedule or controls.
+       Its scripts are intentionally not loaded while the wedding is postponed. -->
+  <div class="invitation-archive" hidden inert aria-hidden="true">
   <!-- Animated cover (screen only) -->
   <header class="hero screen-only" id="hero">
     <canvas class="hero__particles" id="hero-particles" aria-hidden="true"></canvas>
@@ -617,7 +638,6 @@
     </section>
   </div>
 
-  <script src="config.js"></script>
-  <script src="script.js"></script>
+  </div>
 </body>
 </html>
