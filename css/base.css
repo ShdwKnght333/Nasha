@@ -186,3 +186,93 @@ body {
   white-space: nowrap;
   border: 0;
 }
+
+/* The archived invitation stays unavailable on screen and in print, even at old anchors. */
+.invitation-archive {
+  display: none !important;
+}
+
+.wedding-update {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(16px, 4vw, 48px);
+  background:
+    linear-gradient(rgba(18, 10, 1, 0.6), rgba(18, 10, 1, 0.8)),
+    url('../assets/scenery/ridge-near.png') bottom center / auto 45vh repeat-x,
+    linear-gradient(180deg, #120a01, #3d263a 55%, #b0603a);
+}
+
+.wedding-update__parchment {
+  width: 100%;
+  max-width: 720px;
+  padding: 12px;
+  background: #f7ebd3 url('../parchment_bg.png') center / cover;
+  border: 4px double var(--gold-primary);
+  border-radius: 8px;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55), inset 0 0 70px rgba(139, 90, 43, 0.15);
+}
+
+.wedding-update__frame {
+  border: 1px solid var(--border-color);
+  padding: clamp(20px, 4vw, 40px);
+  text-align: center;
+}
+
+.wedding-update__sigil {
+  display: block;
+  margin: 0 auto 12px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.wedding-update__eyebrow {
+  margin: 0 0 12px;
+  color: var(--gold-dark);
+  font-family: 'MedievalSharp', Georgia, serif;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.wedding-update h1 {
+  margin: 0;
+  color: var(--crimson-dark);
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: clamp(1.65rem, 5vw, 2.5rem);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.wedding-update__status {
+  margin: 20px 0 24px;
+  padding: 12px 0;
+  border-block: 1px solid var(--border-color);
+  color: var(--crimson-dark);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.wedding-update__message {
+  text-align: left;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.wedding-update__message p {
+  margin: 0 0 16px;
+}
+
+.wedding-update__closing {
+  margin: 24px 0 0;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.wedding-update__signature {
+  margin: 20px 0 0;
+  color: var(--crimson-dark);
+  font-family: 'MedievalSharp', Georgia, serif;
+  font-size: 1.2rem;
+}
